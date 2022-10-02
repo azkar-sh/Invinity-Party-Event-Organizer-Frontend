@@ -1,0 +1,25 @@
+.header-card {
+  border-radius: 0px !important;
+}
+
+.text-pink {
+  color: #ff3d71;
+}
+
+.bg-pink {
+  background-color: #f1c9d4;
+}
+
+.bg-dark-grey {
+  background-color: rgba(0, 0, 0, 0.753);
+}
+
+.letter-spacing {
+  letter-spacing: 0.1em;
+}
+
+@media screen and (max-width: 768px) {
+  #discover-event {
+    font-size: 12px;
+  }
+}
