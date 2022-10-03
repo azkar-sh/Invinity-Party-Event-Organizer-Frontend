@@ -61,7 +61,7 @@ export default function Header() {
 
               <div className="navbar-nav justify-content-center">
                 <a
-                  className="btn btn-white"
+                  className="btn btn-light me-2"
                   role="button"
                   style={{ width: "120px" }}
                   onClick={() => navigationHandler("signin")}

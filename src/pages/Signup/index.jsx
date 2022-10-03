@@ -125,7 +125,7 @@ function Signup() {
                     <input
                       type={showConfirmPassword ? "text" : "password"}
                       className="form-control"
-                      name="password"
+                      name="confirmPassword"
                       placeholder="Confirm Password"
                       onChange={handleInputChange}
                     />
