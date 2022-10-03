@@ -1,10 +1,47 @@
 import "./index.css";
 import authBanner from "../../assets/img/Auth/auth-banner.png";
 import logo from "../../assets/img/Inviticket.png";
+import axios from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Signup() {
   const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleSignup = async () => {
+    try {
+      const result = await axios.post("api/auth/register", form);
+      alert(JSON.stringify(result.data.msg));
+      navigate("/signin");
+    } catch (error) {
+      alert(error.response.data.msg);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const navigationHandler = (path) => {
     navigate(`/${path}`);
@@ -53,32 +90,53 @@ function Signup() {
                   <input
                     type="text"
                     className="form-control my-3"
-                    id="inputName"
+                    name="username"
                     aria-describedby="nameHelp"
-                    placeholder="Full Name"
+                    placeholder="Username"
+                    onChange={handleInputChange}
                   />
 
                   <input
                     type="email"
                     className="form-control my-3"
-                    id="inputEmail"
+                    name="email"
                     aria-describedby="emailHelp"
                     placeholder="Email"
+                    onChange={handleInputChange}
                   />
+                  <div className="input-group my-3">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control"
+                      name="password"
+                      placeholder="Password"
+                      onChange={handleInputChange}
+                    />
+                    <button
+                      className="btn btn-primary"
+                      style={{ width: "15%" }}
+                      onClick={handleShowPassword}
+                    >
+                      {showPassword ? "Hide" : "Show"}
+                    </button>
+                  </div>
 
-                  <input
-                    type="password"
-                    className="form-control my-3"
-                    id="inputPassword"
-                    placeholder="Password"
-                  />
-
-                  <input
-                    type="password"
-                    className="form-control my-3"
-                    id="inputConfirmPassword"
-                    placeholder="Confirm Password"
-                  />
+                  <div className="input-group">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      className="form-control"
+                      name="password"
+                      placeholder="Confirm Password"
+                      onChange={handleInputChange}
+                    />
+                    <button
+                      className="btn btn-primary"
+                      style={{ width: "15%" }}
+                      onClick={handleShowConfirmPassword}
+                    >
+                      {showConfirmPassword ? "Hide" : "Show"}
+                    </button>
+                  </div>
 
                   <div className="form-check mt-3">
                     <input
@@ -97,7 +155,11 @@ function Signup() {
                       </a>
                     </label>
                   </div>
-                  <button type="submit" className="btn btn-primary w-100 my-3">
+                  <button
+                    type="submit"
+                    className="btn btn-primary w-100 my-3"
+                    onClick={handleSignup}
+                  >
                     Sign Up
                   </button>
                 </div>
