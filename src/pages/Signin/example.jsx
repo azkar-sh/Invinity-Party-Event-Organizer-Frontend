@@ -14,13 +14,13 @@ export default function Signin() {
 
   const handleLogin = async () => {
     try {
-      const result = await axios.post("api/auth/login", form);
-      localStorage.setItem("userId", result.data.data.id);
+      const result = await axios.post("auth/login", form);
+      localStorage.setItem("userId", result.data.data.userId);
       localStorage.setItem("token", result.data.data.token);
-      alert(JSON.stringify(result.data.msg));
+      alert(JSON.stringify(result.data.message));
       navigate("/");
     } catch (error) {
-      alert(error.response.data.msg);
+      alert(error.response.data.message);
     }
   };
 
