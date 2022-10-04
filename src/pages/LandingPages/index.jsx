@@ -1,10 +1,6 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import bannerLandscape from "../../assets/img/Event Banner-Landscape.png";
-import event1 from "../../assets/img/Event 1.jpg";
-import event2 from "../../assets/img/Event 2.jpg";
-import event3 from "../../assets/img/Event 3.jpg";
-import groupPeople from "../../assets/img/Group People.png";
 import styleBackground from "../../assets/img/LandingPage/styled-bg.png";
 import styledBackground2 from "../../assets/img/LandingPage/styled-bg-2.png";
 import Jakarta from "../../assets/img/LandingPage/Jakarta.png";
@@ -17,9 +13,49 @@ import Yogyakarta from "../../assets/img/LandingPage/Yogyakarta.png";
 import partner1 from "../../assets/img/LandingPage/partner-1.png";
 import partner2 from "../../assets/img/LandingPage/partner-2.png";
 import partner3 from "../../assets/img/LandingPage/partner-3.png";
+import CardEvent from "../../components/cardEvent";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "./index.css";
+import axios from "../../utils/axios";
 
 function Landing() {
+  const navigate = useNavigate();
+
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pagination, setPagination] = useState({});
+
+  useEffect(() => {
+    getDataEvent();
+  }, []);
+
+  useEffect(() => {
+    getDataEvent();
+  }, [page]);
+
+  const getDataEvent = async () => {
+    try {
+      const result = await axios.get(`event?page=${page}&limit=4&sort=&name=`);
+      setData(result.data.data);
+      setPagination(result.data.pagination);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDetailEvent = () => {
+    navigate("/detail/${id}");
+  };
+
+  const handleNext = () => {
+    setPage(page + 1);
+  };
+
+  const handlePrev = () => {
+    setPage(page - 1);
+  };
+
   return (
     <div>
       {/* Start Header */}
@@ -112,92 +148,38 @@ function Landing() {
 
         <section>
           <div className="container">
-            <div className=" d-flex flex-card-event flex-row flex-nowrap row gap-2 overflow-auto">
-              <div className="col-lg-3 d-flex align-items-stretch">
-                <div className="card card-event">
-                  <img src={event1} className="card-img-top" alt="..." />
-                  <div className="card-img-overlay d-flex flex-column justify-content-end text-white">
-                    <h6 className="event-date">Wed, Sept 28, 2022</h6>
-                    <p className="card-text event-description">
-                      Best Movie Exprierence in Town <br />
-                      <a href="detail-event.html">
-                        <img src={groupPeople} />
-                      </a>
-                    </p>
+            <div className=" d-flex justify-content-center gap-3">
+              {data.length > 0 ? (
+                data.map((item) => (
+                  <div key={item.id}>
+                    <CardEvent data={item} handleDetail={handleDetailEvent} />
                   </div>
+                ))
+              ) : (
+                <div className="text-center">
+                  <h3>Data Not Found !</h3>
                 </div>
-              </div>
-
-              <div className="col-lg-3 d-flex align-items-stretch">
-                <div className="card card-event">
-                  <img src={event2} className="card-img-top" alt="..." />
-                  <div className="card-img-overlay d-flex flex-column justify-content-end text-white">
-                    <h5 className="event-date">Mon, Jan 2, 2023</h5>
-                    <p className="card-text event-description">
-                      Trully Amazing Experience of Art Exhibition <br />
-                      <a href="detail-event.html">
-                        <img src={groupPeople} />
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-3 d-flex align-items-stretch">
-                <div className="card card-event">
-                  <img src={event3} className="card-img-top" alt="..." />
-                  <div className="card-img-overlay d-flex flex-column justify-content-end text-white">
-                    <h5 className="event-date">Wed, Sept 28, 2022</h5>
-                    <p className="card-text event-description">
-                      Feed Your Soul with Music <br />
-                      <a href="detail-event.html">
-                        <img src={groupPeople} />
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-3 d-flex align-items-stretch">
-                <div className="card card-event">
-                  <img src={event1} className="card-img-top" alt="..." />
-                  <div className="card-img-overlay d-flex flex-column justify-content-end text-white">
-                    <h5 className="event-date">Mon, Jan 2, 2023</h5>
-                    <p className="card-text event-description">
-                      Best Movie Exprierence in Town <br />
-                      <a href="detail-event.html">
-                        <img src={groupPeople} />
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-3 d-flex align-items-stretch">
-                <div className="card card-event">
-                  <img src={event2} className="card-img-top" alt="..." />
-                  <div className="card-img-overlay d-flex flex-column justify-content-end text-white">
-                    <h5 className="event-date">Wed, Sept 28, 2022</h5>
-                    <p className="card-text event-description">
-                      Trully Amazing Experience of Art Exhibition <br />
-                      <a href="detail-event.html">
-                        <img src={groupPeople} />
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </section>
-        <div className="d-flex justify-content-center align-items-center gap-5">
-          <a className="btn btn-light" href="#" role="button">
+        <div className="d-flex justify-content-center align-items-center gap-5 mt-3">
+          <button
+            className="btn btn-primary"
+            role="button"
+            onClick={handlePrev}
+          >
             {" "}
             &#x2190;
-          </a>
-          <a className="btn btn-primary" href="#" role="button">
+          </button>
+          <button
+            className="btn btn-primary"
+            role="button"
+            onClick={handleNext}
+            disabled={page === pagination.totalPage ? true : false}
+          >
             &#x2192;
-          </a>
+          </button>
         </div>
 
         <div className="card bg-primary rounded-5 mt-5 border-0">

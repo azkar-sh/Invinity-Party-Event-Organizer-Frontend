@@ -1,0 +1,6 @@
+/* media query */
+@media (max-width: 768px) {
+  .banner.landscape img {
+    display: none;
+  }
+}

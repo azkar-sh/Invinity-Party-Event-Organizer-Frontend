@@ -26,7 +26,7 @@ export default function Landing() {
 
   const getDataProduct = async () => {
     try {
-      const result = await axios.get(`event?page=${page}&limit=&sort=&name=`);
+      const result = await axios.get(`event?page=${page}&limit=4&sort=&name=`);
       console.log(result);
       setData(result.data.data);
       setPagination(result.data.pagination);
@@ -49,7 +49,7 @@ export default function Landing() {
 
   return (
     <div>
-      <main className="container d-flex gap-3">
+      <main className="container d-flex justify-content-center gap-4">
         {data.length > 0 ? (
           data.map((item) => (
             <div key={item.id}>
@@ -67,7 +67,7 @@ export default function Landing() {
         <button
           className="btn btn-primary"
           onClick={handlePrev}
-          disabled={page !== pagination.totalPage ? true : false}
+          // disabled={pagination.prevLink ? false : true}
         >
           &lt;
         </button>
