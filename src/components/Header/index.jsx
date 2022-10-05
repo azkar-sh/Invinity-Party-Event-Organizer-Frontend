@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function Header() {
   const navigate = useNavigate();
   const isLogin = localStorage.getItem("token");
+  const userName = localStorage.getItem("name");
   const logout = () => {
     localStorage.removeItem("token");
     navigate("/");
@@ -80,7 +81,7 @@ export default function Header() {
                         className="rounded-pill mx-3 border border-2 border-primary"
                         style={{ width: "40px" }}
                       />
-                      Admin Profile
+                      {userName ? userName : "User"}
                     </button>
                     <ul className="dropdown-menu dropdown-menu-end">
                       <li>

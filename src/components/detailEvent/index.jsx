@@ -1,4 +1,6 @@
 import React from "react";
+import groupPeople from "../../assets/img/detailEvent/Group People.png";
+import maps from "../../assets/img/detailEvent/maps.png";
 
 export default function DetailEvent(props) {
   return (
@@ -6,14 +8,14 @@ export default function DetailEvent(props) {
       <div className="row">
         <div className="col-md-6 mt-5">
           <img
-            src="./assets/img/Event 1.jpg"
+            src={`https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${props.data.image}`}
             alt="Event 1"
             className="d-block mx-auto w-75 rounded-5 mb-4"
           />
-          <h4 className="text-center">❤ Add to Wishlist</h4>
+          <h4 className="text-center mb-5">❤ Add to Wishlist</h4>
         </div>
-        <div className="col-md-6 mb-4 mt-5">
-          <h1 className="fw-bold mb-3">Theater Show</h1>
+        <div className="col-md-5 mb-4 mt-5">
+          <h1 className="fw-bold mb-3">{props.data.name}</h1>
           <div className="row mb-4">
             <div className="col-md-6">
               <small> 📍 {props.data.location}</small>
@@ -22,13 +24,16 @@ export default function DetailEvent(props) {
               <small> 🕓 {props.data.dateTimeShow}</small>
             </div>
           </div>
-          <div className="row mb-1">
+          <div
+            className="row mb-2
+          "
+          >
             <div className="col">
               <small>Attendace</small>
             </div>
           </div>
           <div className="row mb-5">
-            <img src="./assets/img/Group People.png" alt="" className="w-25" />
+            <img src={groupPeople} alt="" className="w-25" />
           </div>
           <hr />
           <div className="row">
@@ -46,7 +51,7 @@ export default function DetailEvent(props) {
           </div>
           <div className="row">
             <div className="col mb-5">
-              <small>Price: {props.data.price}</small>
+              <small className="fw-bold">Price: {props.data.price}</small>
             </div>
           </div>
           <div className="row">
@@ -56,11 +61,7 @@ export default function DetailEvent(props) {
           </div>
           <div className="row">
             <div className="col md-6 mb-5">
-              <img
-                src="./assets/img/maps.png"
-                alt=""
-                className="w-75 rounded-4 shadow"
-              />
+              <img src={maps} alt="" className="w-75 rounded-4 shadow" />
             </div>
           </div>
           <div className="row">

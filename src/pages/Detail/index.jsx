@@ -3,25 +3,31 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import "./index.css";
 import axios from "../../utils/axios";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import DetailEvent from "../../components/detailEvent";
+import { useParams } from "react-router-dom";
 
 export default function Detail() {
-  const [data, setData] = useState([]);
-  const eventId = localStorage.getItem("eventid");
+  // const [data, setData] = useState([]);
+  // const eventId = localStorage.getItem("eventid");
+  const { eventId } = useParams();
 
-  useEffect(() => {
-    getDataEvent();
-  }, []);
+  const [data, setData] = useState({});
 
-  const getDataEvent = async () => {
+  const getData = async () => {
     try {
-      const result = await axios.get(`event/${eventId}`);
+      const result = await axios.get(`/event/${eventId}`);
       setData(result.data.data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  console.log(data);
 
   return (
     <div>
@@ -30,10 +36,10 @@ export default function Detail() {
 
       {/* Start Content */}
       <div
-        className="container-fluid bg-secondary"
+        className="container-fluid bg-secondary pt-5 pb-5"
         style={{ marginTop: "75px" }}
       >
-        <div className="container bg-primary rounded-5">
+        <div className="container bg-white rounded-5">
           {data.length > 0 ? (
             data.map((item) => (
               <div key={item.id}>
