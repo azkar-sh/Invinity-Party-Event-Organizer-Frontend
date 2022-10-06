@@ -20,7 +20,7 @@ function Signup() {
 
   const handleSignup = async () => {
     try {
-      const result = await axios.post("api/auth/register", form);
+      const result = await axios.post("/auth/register", form);
       alert(JSON.stringify(result.data.msg));
       navigate("/signin");
     } catch (error) {
