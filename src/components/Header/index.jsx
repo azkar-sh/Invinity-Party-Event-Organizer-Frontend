@@ -81,7 +81,7 @@ export default function Header() {
                         className="rounded-pill mx-3 border border-2 border-primary"
                         style={{ width: "40px" }}
                       />
-                      {userName ? userName : "User"}
+                      {userName ? userName : "User Profile"}
                     </button>
                     <ul className="dropdown-menu dropdown-menu-end">
                       <li>

@@ -85,10 +85,9 @@ function Landing() {
   const handleSearch = async () => {
     try {
       const result = await axios.get(
-        `event?page=${page}&limit=4&sort=&dateTimeShow=&name=${keyword}`
+        `event?page=&limit=4&sort=&dateTimeShow=&name=${keyword}`
       );
       setData(result.data.data);
-      setPagination(result.data.pagination);
     } catch (error) {
       console.log(error);
     }
@@ -97,10 +96,9 @@ function Landing() {
   const handleSearchDate = async () => {
     try {
       const result = await axios.get(
-        `event?page=${page}&limit=4&sort=&dateTimeShow=${dateShow}&name=${keyword}`
+        `event?page=&limit=4&sort=&dateTimeShow=${dateShow}&name=`
       );
       setData(result.data.data);
-      setPagination(result.data.pagination);
     } catch (error) {
       console.log(error);
     }
@@ -109,10 +107,9 @@ function Landing() {
   const removeSearch = async () => {
     try {
       const result = await axios.get(
-        `event?page=${page}&limit=4&sort=&dateTimeShow=&name=`
+        `event?page=&limit=4&sort=&dateTimeShow=&name=`
       );
       setData(result.data.data);
-      setPagination(result.data.pagination);
     } catch (error) {
       console.log(error);
     }

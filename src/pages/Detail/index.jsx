@@ -8,8 +8,6 @@ import DetailEvent from "../../components/detailEvent";
 import { useParams } from "react-router-dom";
 
 export default function Detail() {
-  // const [data, setData] = useState([]);
-  // const eventId = localStorage.getItem("eventid");
   const { eventId } = useParams();
 
   const [data, setData] = useState({});
@@ -48,7 +46,7 @@ export default function Detail() {
             ))
           ) : (
             <div className="text-center">
-              <h3>Data Not Found !</h3>
+              <h3>Please Wait!</h3>
             </div>
           )}
         </div>
