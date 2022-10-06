@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./index.css";
 import axios from "../../utils/axios";
+import moment from "moment";
 
 function Landing() {
   const navigate = useNavigate();
@@ -25,6 +26,9 @@ function Landing() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pagination, setPagination] = useState({});
+  const [keyword, setKeyword] = useState("");
+  const [dateShow, setDateShow] = useState(moment().format("YYYY-MM-DD"));
+  const [listDateShow, setListDateShow] = useState([]);
 
   useEffect(() => {
     getDataEvent();
@@ -34,9 +38,31 @@ function Landing() {
     getDataEvent();
   }, [page]);
 
+  useEffect(() => {
+    generateDate();
+  }, [dateShow]);
+
+  const generateDate = () => {
+    let listDate = [
+      moment(dateShow).subtract(2, "days"),
+      moment(dateShow).subtract(1, "days"),
+      moment(dateShow),
+      moment(dateShow).add(1, "days"),
+      moment(dateShow).add(2, "days"),
+    ];
+    setListDateShow(listDate);
+  };
+
+  const selectDate = (date) => {
+    setDateShow(date);
+  };
+  console.log(dateShow);
+
   const getDataEvent = async () => {
     try {
-      const result = await axios.get(`event?page=${page}&limit=4&sort=&name=`);
+      const result = await axios.get(
+        `event?page=${page}&limit=4&sort=&dateTimeShow=&name=`
+      );
       setData(result.data.data);
       setPagination(result.data.pagination);
     } catch (error) {
@@ -54,6 +80,42 @@ function Landing() {
 
   const handlePrev = () => {
     setPage(page - 1);
+  };
+
+  const handleSearch = async () => {
+    try {
+      const result = await axios.get(
+        `event?page=${page}&limit=4&sort=&dateTimeShow=&name=${keyword}`
+      );
+      setData(result.data.data);
+      setPagination(result.data.pagination);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSearchDate = async () => {
+    try {
+      const result = await axios.get(
+        `event?page=${page}&limit=4&sort=&dateTimeShow=${dateShow}&name=${keyword}`
+      );
+      setData(result.data.data);
+      setPagination(result.data.pagination);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeSearch = async () => {
+    try {
+      const result = await axios.get(
+        `event?page=${page}&limit=4&sort=&dateTimeShow=&name=`
+      );
+      setData(result.data.data);
+      setPagination(result.data.pagination);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -82,13 +144,18 @@ function Landing() {
                           type="text"
                           className="form-control py-1 border-0"
                           placeholder="Search Events"
+                          onChange={(e) => setKeyword(e.target.value)}
                         />
                         <input
                           type="text"
                           className="form-control border-top-0 border-bottom-0 py-1"
                           placeholder="Location"
                         />
-                        <button className="btn btn-primary" type="button">
+                        <button
+                          className="btn btn-primary"
+                          type="button"
+                          onClick={handleSearch}
+                        >
                           &#10140;
                         </button>
                       </div>
@@ -112,39 +179,22 @@ function Landing() {
 
           <div className="container text-center w-50 mt-5 mb-5">
             <div className="d-flex justify-content-center align-items-center">
-              <div className="col">
-                <a className="btn btn-light" href="#" role="button">
-                  {" "}
-                  &#x2190;
-                </a>
-              </div>
-              <div className="col">
-                <p className="fs-6">26</p>
-                <p>Mon</p>
-              </div>
-              <div className="col">
-                <p>26</p>
-                <p>Tue</p>
-              </div>
-              <div className="col">
-                <div className="border rounded-5 bg-light p-1">
-                  <p>27</p>
-                  <p>Wed</p>
-                </div>
-              </div>
-              <div className="col">
-                <p>28</p>
-                <p>Thur</p>
-              </div>
-              <div className="col">
-                <p>29</p>
-                <p>Fri</p>
-              </div>
-              <div className="col">
-                <a className="btn btn-primary" href="#" role="button">
-                  &#x2192;
-                </a>
-              </div>
+              {listDateShow.map((item, index) => (
+                <button
+                  key={index}
+                  style={{ margin: "0 10px" }}
+                  className={`btn btn-outline-primary ${
+                    index === 2 ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    selectDate(moment(item).format("YYYY-MM-DD"));
+                    handleSearchDate();
+                  }}
+                >
+                  <div>{moment(item).format("DD")}</div>
+                  <small>{moment(item).format("ddd")}</small>
+                </button>
+              ))}
             </div>
           </div>
 
@@ -165,7 +215,7 @@ function Landing() {
               </div>
             </div>
           </section>
-          <div className="d-flex justify-content-center align-items-center gap-5 mt-3">
+          <div className="d-flex justify-content-center align-items-center gap-3 mt-3">
             <button
               className="btn btn-primary"
               role="button"
@@ -173,6 +223,9 @@ function Landing() {
             >
               {" "}
               &#x2190;
+            </button>
+            <button className="btn btn-secondary" onClick={removeSearch}>
+              Reset
             </button>
             <button
               className="btn btn-primary"

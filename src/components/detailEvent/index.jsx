@@ -1,8 +1,16 @@
 import React from "react";
 import groupPeople from "../../assets/img/detailEvent/Group People.png";
 import maps from "../../assets/img/detailEvent/maps.png";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function DetailEvent(props) {
+  const navigate = useNavigate();
+  const { eventId } = useParams();
+
+  const handleOrder = () => {
+    navigate(`/order/${eventId}`);
+  };
+
   return (
     <div>
       <div className="row">
@@ -66,14 +74,15 @@ export default function DetailEvent(props) {
           </div>
           <div className="row">
             <div className="col-md-6">
-              <a
+              <button
                 className="btn btn-primary shadow bg-primary mb-5"
                 href="booking.html"
                 role="button"
                 style={{ width: "100%" }}
+                onClick={handleOrder}
               >
                 Buy Ticket
-              </a>
+              </button>
             </div>
           </div>
         </div>

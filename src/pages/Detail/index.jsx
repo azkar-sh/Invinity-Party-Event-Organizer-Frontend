@@ -30,13 +30,13 @@ export default function Detail() {
   console.log(data);
 
   return (
-    <div>
+    <div className="bg-light">
       {/* Header */}
       <Header />
 
       {/* Start Content */}
       <div
-        className="container-fluid bg-secondary pt-5 pb-5"
+        className="container-fluid bg-light pt-5 pb-5"
         style={{ marginTop: "75px" }}
       >
         <div className="container bg-white rounded-5">

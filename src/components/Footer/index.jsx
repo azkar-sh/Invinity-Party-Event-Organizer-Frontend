@@ -7,7 +7,7 @@ import "./index.css";
 
 export default function Footer() {
   return (
-    <div>
+    <div className="bg-light">
       <div className="container">
         <footer className="row row-cols-1 row-cols-sm-2 row-cols-md-5 pt-5 mt-5 border-top justify-content-evenly">
           <div className="col mb-2">

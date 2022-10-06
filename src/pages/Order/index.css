@@ -1,0 +1,41 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.bg-grey-order {
+  background-color: #c1c5d0;
+}
+
+.container-order {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-order {
+  width: 100%;
+  display: flex;
+}
+
+.rotate-seat-order {
+  transform: rotate(-45deg);
+}
+
+.ticket-scrolling-order {
+  height: 300px;
+  overflow: auto;
+  /* background-color: brown; */
+}
+
+.ticket-icon-order {
+  width: 45px;
+}
+
+@media (max-width: 767.98px) {
+  .rotate-seat-order {
+    transform: none;
+  }
+}
