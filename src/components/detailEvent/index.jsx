@@ -1,15 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import groupPeople from "../../assets/img/detailEvent/Group People.png";
 import maps from "../../assets/img/detailEvent/maps.png";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "../../utils/axios";
+// import sortIcon from "../../assets/img/sort-icon.png";
 
 export default function DetailEvent(props) {
   const navigate = useNavigate();
   const { eventId } = useParams();
+  const dataUserId = localStorage.getItem("userId");
+
+  // const [addedWishlist, setAddedWishlist] = useState(false);
+
+  const [dataWishlist, setDataWishlist] = useState({
+    userId: dataUserId,
+    eventId: eventId,
+  });
+
+  console.log(setDataWishlist);
+
+  const handleWishlist = async () => {
+    try {
+      const result = await axios.post("/wishlist", dataWishlist);
+      alert("Added to wishlist");
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleOrder = () => {
     navigate(`/order/${eventId}`);
   };
+
+  // const handlerAdded = async () => {
+  //   try {
+  //     const result = await axios.delete("/wishlist", dataWishlist);
+  //     console.log(result);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   setAddedWishlist(!addedWishlist);
+  // };
 
   return (
     <div>
@@ -20,7 +52,13 @@ export default function DetailEvent(props) {
             alt="Event 1"
             className="d-block mx-auto w-75 rounded-5 mb-4"
           />
-          <h4 className="text-center mb-5">❤ Add to Wishlist</h4>
+
+          <button
+            className="btn btn-outline-primary d-block mx-auto mb-4"
+            onClick={() => handleWishlist()}
+          >
+            ♥️ Add To Wishlist
+          </button>
         </div>
         <div className="col-md-5 mb-4 mt-5">
           <h1 className="fw-bold mb-3">{props.data.name}</h1>
