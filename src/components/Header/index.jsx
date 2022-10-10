@@ -9,7 +9,7 @@ export default function Header() {
   const isLogin = localStorage.getItem("token");
   const userName = localStorage.getItem("name");
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     navigate("/");
   };
 
