@@ -61,7 +61,7 @@ function Landing() {
   const getDataEvent = async () => {
     try {
       const result = await axios.get(
-        `event?page=${page}&limit=4&sort=&dateTimeShow=&name=`
+        `event?page=${page}&limit=4&sort=&dateTimeShow=${dateShow}&name=`
       );
       setData(result.data.data);
       setPagination(result.data.pagination);

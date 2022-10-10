@@ -6,6 +6,7 @@ import axios from "../../utils/axios";
 import { useState, useEffect } from "react";
 import DetailEvent from "../../components/detailEvent";
 import { useParams } from "react-router-dom";
+import loadingGif from "../../assets/img/loading-9.gif";
 
 export default function Detail() {
   const { eventId } = useParams();
@@ -46,7 +47,8 @@ export default function Detail() {
             ))
           ) : (
             <div className="text-center">
-              <h3>Please Wait!</h3>
+              <img src={loadingGif} alt="" className="w-50" />
+              {/* <h3>Please Wait!</h3> */}
             </div>
           )}
         </div>
