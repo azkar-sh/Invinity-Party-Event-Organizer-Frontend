@@ -56,7 +56,6 @@ function Landing() {
   const selectDate = (date) => {
     setDateShow(date);
   };
-  console.log(dateShow);
 
   const getDataEvent = async () => {
     try {

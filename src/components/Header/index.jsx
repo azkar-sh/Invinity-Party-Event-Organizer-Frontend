@@ -1,21 +1,49 @@
 import React from "react";
 import logo from "../../assets/img/Inviticket.png";
-import noPhoto from "../../assets/img/no-photo.png";
+// import noPhoto from "../../assets/img/no-photo.png";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "../../utils/axios";
 
 export default function Header() {
   const navigate = useNavigate();
   const isLogin = localStorage.getItem("token");
-  const userName = localStorage.getItem("name");
+  const userId = localStorage.getItem("userId");
+  const [defaultImage, setDefaultImage] = useState(null);
+  const [userData, setUserData] = useState([]);
+
   const logout = () => {
     localStorage.clear();
     navigate("/");
   };
 
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    try {
+      const response = await axios.get(`/user/${userId}`);
+      setUserData(response.data.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const userName = userData.name;
+  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userData.image}`;
+  const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
+
   const navigationHandler = (path) => {
     navigate(`/${path}`);
   };
+
+  const navigationHandlerUser = () => {
+    navigate(`/user/${userId}`);
+  };
+
+  console.log(setDefaultImage);
 
   return (
     <div>
@@ -76,7 +104,7 @@ export default function Header() {
                       aria-expanded="false"
                     >
                       <img
-                        src={noPhoto}
+                        src={defaultImage ? userImage : randomImage}
                         alt="avatar"
                         className="rounded-pill mx-3 border border-2 border-primary"
                         style={{ width: "40px" }}
@@ -85,7 +113,10 @@ export default function Header() {
                     </button>
                     <ul className="dropdown-menu dropdown-menu-end">
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <a
+                          className="dropdown-item"
+                          onClick={navigationHandlerUser}
+                        >
                           Profile
                         </a>
                       </li>
