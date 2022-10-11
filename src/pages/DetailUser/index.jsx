@@ -5,9 +5,21 @@ import SideNavbar from "../../components/SideNavbar";
 import { useState, useEffect } from "react";
 import axios from "../../utils/axios";
 
+import { useSelector, useDispatch } from "react-redux";
+import { getDataUser } from "../../stores/actions/user";
+
 export default function DetailUser() {
-  const [userData, setUserData] = useState([]);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getDataUser());
+  }, []);
+
+  console.log(user.userData);
+
   const userId = localStorage.getItem("userId");
+  const [userData, setUserData] = useState([]);
   const [defaultImage, setDefaultImage] = useState(null);
 
   useEffect(() => {

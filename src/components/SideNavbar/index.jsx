@@ -9,11 +9,13 @@ import settingIcon from "../../assets/img/detailUser/setting-icon.png";
 import axios from "../../utils/axios";
 import "./index.css";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SideNavbar() {
   const [userData, setUserData] = useState([]);
   const [defaultImage, setDefaultImage] = useState(null);
   const userId = localStorage.getItem("userId");
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUserData();
@@ -26,6 +28,10 @@ export default function SideNavbar() {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const navigationUser = (path) => {
+    navigate(`/user/${path}/${userId}`);
   };
 
   const userName = userData.name;
@@ -58,7 +64,10 @@ export default function SideNavbar() {
         </button>
       </div>
       <div className="col ms-3 mb-3">
-        <button className="btn w-75 text-start btn-hover">
+        <button
+          className="btn w-75 text-start btn-hover"
+          onClick={() => navigationUser("edit")}
+        >
           {" "}
           <img src={editProfileIcon} alt="" /> Edit Profile
         </button>
