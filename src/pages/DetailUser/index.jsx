@@ -3,43 +3,25 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import SideNavbar from "../../components/SideNavbar";
 import { useState, useEffect } from "react";
-import axios from "../../utils/axios";
+import { useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getDataUser } from "../../stores/actions/user";
+import { getDataUserById } from "../../stores/actions/user";
 
 export default function DetailUser() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const { userId } = useParams();
+  const [defaultImage, setDefaultImage] = useState("");
+  const userImageData = user.userData[0].image;
 
   useEffect(() => {
-    dispatch(getDataUser());
-  }, []);
+    dispatch(getDataUserById(userId));
+    setDefaultImage(user.userData[0].image);
+  }, [userId]);
 
-  console.log(user.userData);
-
-  const userId = localStorage.getItem("userId");
-  const [userData, setUserData] = useState([]);
-  const [defaultImage, setDefaultImage] = useState(null);
-
-  useEffect(() => {
-    getUserData();
-  }, []);
-
-  const getUserData = async () => {
-    try {
-      const response = await axios.get(`/user/${userId}`);
-      setUserData(response.data.data[0]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  //   const userName = userData.name;
-  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userData.image}`;
-  const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
-
-  console.log(setDefaultImage);
+  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userImageData}`;
+  const randomImage = `https://ui-avatars.com/api/?background=random&name=${user.userData[0].username}`;
 
   return (
     <div className="bg-light">
@@ -77,31 +59,51 @@ export default function DetailUser() {
                   </div>
                   <div className="col-sm-6">
                     <p className="my-4">
-                      {userData.name ? userData.name : <br />}
+                      {user.userData[0].name ? user.userData[0].name : <br />}
                     </p>
 
                     <p className="my-4">
-                      {userData.username ? userData.username : <br />}
+                      {user.userData[0].username ? (
+                        user.userData[0].username
+                      ) : (
+                        <br />
+                      )}
                     </p>
 
                     <p className="my-4">
-                      {userData.email ? userData.email : <br />}
+                      {user.userData[0].email ? user.userData[0].email : <br />}
                     </p>
 
                     <p className="my-4">
-                      {userData.gender ? userData.gender : <br />}
+                      {user.userData[0].gender ? (
+                        user.userData[0].gender
+                      ) : (
+                        <br />
+                      )}
                     </p>
 
                     <p className="my-4">
-                      {userData.profession ? userData.profession : <br />}
+                      {user.userData[0].profession ? (
+                        user.userData[0].profession
+                      ) : (
+                        <br />
+                      )}
                     </p>
 
                     <p className="my-4">
-                      {userData.nationality ? userData.nationality : <br />}
+                      {user.userData[0].nationality ? (
+                        user.userData[0].nationality
+                      ) : (
+                        <br />
+                      )}
                     </p>
 
                     <p className="my-4">
-                      {userData.dateOfBirth ? userData.dateOfBirth : <br />}
+                      {user.userData[0].dateOfBirth ? (
+                        user.userData[0].dateOfBirth
+                      ) : (
+                        <br />
+                      )}
                     </p>
                   </div>
                   <div className="col-sm-3">

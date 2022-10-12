@@ -6,8 +6,9 @@ import Order from "./pages/Order";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Notfound from "./pages/NotFound";
-import DetailUser from "./pages/DetailUser/example";
+import DetailUser from "./pages/DetailUser";
 import EditUser from "./pages/EditUser";
+import ChangePassword from "./pages/ChangePassword";
 
 import PublicRoute from "./utils/routes/PublicRoute";
 import PrivateRoute from "./utils/routes/PrivateRoute";
@@ -33,6 +34,10 @@ function App() {
           <Route path="/order/:eventId" element={<Order />} />
           <Route path="/user/:userId" element={<DetailUser />} />
           <Route path="/user/edit/:userId" element={<EditUser />} />
+          <Route
+            path="/user/changepassword/:userId"
+            element={<ChangePassword />}
+          />
         </Route>
 
         {/* Admin Route */}

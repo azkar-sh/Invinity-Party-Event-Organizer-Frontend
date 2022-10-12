@@ -97,7 +97,7 @@ export default function Header() {
                 <>
                   <div className="dropdown">
                     <button
-                      className="btn btn-white dropdown-toggle"
+                      className="btn btn-white dropdown-toggle text-end"
                       type="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"

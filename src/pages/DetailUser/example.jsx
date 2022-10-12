@@ -36,7 +36,7 @@ export default function DetailUser() {
       [e.target.name]: e.target.value,
     });
   };
-  console.log(user.userData[0]);
+  // console.log(user.userData[0]);
 
   return (
     <div>

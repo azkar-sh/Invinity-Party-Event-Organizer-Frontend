@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function SideNavbar() {
   const [userData, setUserData] = useState([]);
-  const [defaultImage, setDefaultImage] = useState(null);
+  const [defaultImage, setDefaultImage] = useState("");
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
 
@@ -25,6 +25,7 @@ export default function SideNavbar() {
     try {
       const response = await axios.get(`/user/${userId}`);
       setUserData(response.data.data[0]);
+      setDefaultImage(response.data.data[0].image);
     } catch (error) {
       console.log(error);
     }
@@ -35,10 +36,8 @@ export default function SideNavbar() {
   };
 
   const userName = userData.name;
-  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userData.image}`;
+  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${defaultImage}`;
   const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
-
-  console.log(setDefaultImage);
 
   return (
     <>
@@ -72,7 +71,10 @@ export default function SideNavbar() {
         </button>
       </div>
       <div className="col ms-3 mb-3">
-        <button className="btn w-75 text-start btn-hover">
+        <button
+          className="btn w-75 text-start btn-hover"
+          onClick={() => navigationUser("changepassword")}
+        >
           {" "}
           <img src={changePassIcon} alt="" /> Change Password
         </button>

@@ -3,31 +3,52 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import SideNavbar from "../../components/SideNavbar";
 import { useState, useEffect } from "react";
-import axios from "../../utils/axios";
+
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import { getDataUserById, updateDataUser } from "../../stores/actions/user";
 
 export default function DetailUser() {
-  const [userData, setUserData] = useState([]);
-  const userId = localStorage.getItem("userId");
-  const [defaultImage, setDefaultImage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userId } = useParams();
+  const [updateData, setUpdateData] = useState({
+    name: "",
+    username: "",
+    gender: "",
+    profession: "",
+    nationality: "",
+    dateOfBirth: "",
+  });
+
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    getUserData();
-  }, []);
+    dispatch(getDataUserById(userId));
+    setDefaultImage(userImage);
+  }, [userId]);
 
-  const getUserData = async () => {
-    try {
-      const response = await axios.get(`/user/${userId}`);
-      setUserData(response.data.data[0]);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleChange = (e) => {
+    setUpdateData({
+      [e.target.name]: e.target.value,
+    });
   };
 
-  //   const userName = userData.name;
-  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userData.image}`;
-  const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
+  const handleUpdate = () => {
+    dispatch(updateDataUser(userId, updateData));
+    navigate(`/user/${userId}`);
+  };
 
-  console.log(setDefaultImage);
+  const [defaultImage, setDefaultImage] = useState(null);
+
+  const userImageData = user.userData[0].image;
+  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userImageData}`;
+  const randomImage = `https://ui-avatars.com/api/?background=random&name=${user.userData[0].username}`;
+
+  // console.log(setDefaultImage);
+  // console.log(handleChange);
 
   return (
     <div className="bg-light">
@@ -56,7 +77,8 @@ export default function DetailUser() {
                           type="text"
                           className="form-control w-75"
                           name="name"
-                          placeholder={userData.name}
+                          placeholder={user.userData[0].name}
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -70,7 +92,8 @@ export default function DetailUser() {
                           type="text"
                           className="form-control w-75"
                           name="username"
-                          placeholder={userData.username}
+                          placeholder={user.userData[0].username}
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -82,7 +105,7 @@ export default function DetailUser() {
                           type="text"
                           className="form-control-plaintext w-75"
                           name="email"
-                          placeholder={userData.email}
+                          placeholder={user.userData[0].email}
                           readOnly
                         />
                       </div>
@@ -97,7 +120,8 @@ export default function DetailUser() {
                           type="text"
                           className="form-control w-75"
                           name="phoneNumber"
-                          placeholder={userData.phoneNumber}
+                          placeholder={user.userData[0].phoneNumber}
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -105,11 +129,14 @@ export default function DetailUser() {
                     <div className="mb-3 row">
                       <label className="col-sm-3 col-form-label">Gender</label>
                       <div className="d-flex flex-row align-items-center col-sm-9">
-                        <div className="form-check form-check-inline">
+                        <div
+                          className="form-check form-check-inline"
+                          onChange={handleChange}
+                        >
                           <input
                             className="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions"
+                            name="gender"
                             value="male"
                           />
                           <label className="form-check-label" name="male">
@@ -120,7 +147,7 @@ export default function DetailUser() {
                           <input
                             className="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions"
+                            name="gender"
                             value="female"
                           />
                           <label className="form-check-label" name="female">
@@ -139,7 +166,8 @@ export default function DetailUser() {
                           type="text"
                           className="form-control w-75"
                           name="profession"
-                          placeholder={userData.profession}
+                          placeholder={user.userData[0].profession}
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -153,7 +181,8 @@ export default function DetailUser() {
                           type="text"
                           className="form-control w-75"
                           name="nationality"
-                          placeholder={userData.nationality}
+                          placeholder={user.userData[0].nationality}
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -171,7 +200,8 @@ export default function DetailUser() {
                           onBlur={(e) => {
                             e.target.type = "text";
                           }}
-                          placeholder={userData.dateOfBirth}
+                          placeholder={user.userData[0].dateOfBirth}
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -182,6 +212,7 @@ export default function DetailUser() {
                           type="submit"
                           className="btn btn-primary w-100"
                           name="submit"
+                          onClick={handleUpdate}
                         >
                           Save Changes
                         </button>
