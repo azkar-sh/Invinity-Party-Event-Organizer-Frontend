@@ -27,7 +27,6 @@ export default function Landing() {
   const getDataProduct = async () => {
     try {
       const result = await axios.get(`event?page=${page}&limit=4&sort=&name=`);
-      console.log(result);
       setData(result.data.data);
       setPagination(result.data.pagination);
     } catch (error) {

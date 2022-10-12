@@ -24,7 +24,6 @@ function Signin() {
       localStorage.setItem("token", result.data.data.token);
       alert(JSON.stringify(result.data.msg));
       navigate("/");
-      console.log(result);
     } catch (error) {
       alert(error.response.data.msg);
     }

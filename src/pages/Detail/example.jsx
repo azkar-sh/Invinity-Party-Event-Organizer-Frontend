@@ -25,8 +25,6 @@ export default function Detail() {
     getData();
   }, []);
 
-  console.log(data);
-
   return (
     <div className="bg-light">
       {/* Header */}

@@ -10,7 +10,7 @@ export default function Header() {
   const navigate = useNavigate();
   const isLogin = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
-  const [defaultImage, setDefaultImage] = useState(null);
+  const [defaultImage, setDefaultImage] = useState("");
   const [userData, setUserData] = useState([]);
 
   const logout = () => {
@@ -26,13 +26,14 @@ export default function Header() {
     try {
       const response = await axios.get(`/user/${userId}`);
       setUserData(response.data.data[0]);
+      setDefaultImage(response.data.data[0].image);
     } catch (error) {
       console.log(error);
     }
   };
 
   const userName = userData.name;
-  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userData.image}`;
+  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${defaultImage}`;
   const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
 
   const navigationHandler = (path) => {
@@ -42,8 +43,6 @@ export default function Header() {
   const navigationHandlerUser = () => {
     navigate(`/user/${userId}`);
   };
-
-  console.log(setDefaultImage);
 
   return (
     <div>

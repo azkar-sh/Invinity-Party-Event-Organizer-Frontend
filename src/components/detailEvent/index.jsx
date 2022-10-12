@@ -21,9 +21,8 @@ export default function DetailEvent(props) {
 
   const handleWishlist = async () => {
     try {
-      const result = await axios.post("/wishlist", dataWishlist);
+      await axios.post("/wishlist", dataWishlist);
       alert("Added to wishlist");
-      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -32,16 +31,6 @@ export default function DetailEvent(props) {
   const handleOrder = () => {
     navigate(`/order/${eventId}`);
   };
-
-  // const handlerAdded = async () => {
-  //   try {
-  //     const result = await axios.delete("/wishlist", dataWishlist);
-  //     console.log(result);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   setAddedWishlist(!addedWishlist);
-  // };
 
   return (
     <div>

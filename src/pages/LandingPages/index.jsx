@@ -165,9 +165,9 @@ function Landing() {
 
         <main className="container main-container">
           <div className="col-3 rounded-pill bg-pink p-1 text-center mx-auto">
-            <snap className="text-pink letter-spacing fw-bold">
+            <div className="text-pink letter-spacing fw-bold">
               &#8212; EVENT
-            </snap>
+            </div>
           </div>
           <h1 className="text-center mt-5 fw-bold letter-spacing">
             Events For You
@@ -237,9 +237,9 @@ function Landing() {
             <img src={styleBackground} alt="" className="card-img" />
             <div className="card-img-overlay d-flex flex-column justify-content-evenly">
               <div className="col-3 rounded-pill bg-white bg-opacity-10 p-1 text-center mx-auto mt-2 mb-4">
-                <snap className="text-white letter-spacing landing-discover-location">
+                <div className="text-white letter-spacing landing-discover-location">
                   &#8212; LOCATION
-                </snap>
+                </div>
               </div>
 
               <div className="d-flex flex-column text-white ">

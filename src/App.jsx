@@ -6,7 +6,7 @@ import Order from "./pages/Order";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Notfound from "./pages/NotFound";
-import DetailUser from "./pages/DetailUser/";
+import DetailUser from "./pages/DetailUser/example";
 import EditUser from "./pages/EditUser";
 
 import PublicRoute from "./utils/routes/PublicRoute";

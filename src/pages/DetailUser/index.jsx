@@ -40,8 +40,6 @@ export default function DetailUser() {
   const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
 
   console.log(setDefaultImage);
-  console.log(userData);
-  console.log(getUserData);
 
   return (
     <div className="bg-light">

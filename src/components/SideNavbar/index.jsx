@@ -37,8 +37,7 @@ export default function SideNavbar() {
   const userName = userData.name;
   const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userData.image}`;
   const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
-  console.log(userData);
-  console.log(getUserData);
+
   console.log(setDefaultImage);
 
   return (
