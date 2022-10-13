@@ -16,12 +16,12 @@ export default function DetailUser() {
 
   useEffect(() => {
     dispatch(getDataUserById(userId));
-    setDefaultImage(user.userData[0].image);
+    setDefaultImage(user?.userData[0]?.image);
   }, [userId]);
 
-  const userImageData = user.userData[0].image;
+  const userImageData = user?.userData[0]?.image;
   const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userImageData}`;
-  const randomImage = `https://ui-avatars.com/api/?background=random&name=${user.userData[0].username}`;
+  const randomImage = `https://ui-avatars.com/api/?background=random&name=${user?.userData[0]?.username}`;
 
   return (
     <div className="bg-light">
@@ -59,48 +59,56 @@ export default function DetailUser() {
                   </div>
                   <div className="col-sm-5">
                     <p className="my-4">
-                      {user.userData[0].name ? user.userData[0].name : <br />}
-                    </p>
-
-                    <p className="my-4">
-                      {user.userData[0].username ? (
-                        user.userData[0].username
+                      {user?.userData[0]?.name ? (
+                        user?.userData[0]?.name
                       ) : (
                         <br />
                       )}
                     </p>
 
                     <p className="my-4">
-                      {user.userData[0].email ? user.userData[0].email : <br />}
-                    </p>
-
-                    <p className="my-4">
-                      {user.userData[0].gender ? (
-                        user.userData[0].gender
+                      {user?.userData[0]?.username ? (
+                        user?.userData[0]?.username
                       ) : (
                         <br />
                       )}
                     </p>
 
                     <p className="my-4">
-                      {user.userData[0].profession ? (
-                        user.userData[0].profession
+                      {user?.userData[0]?.email ? (
+                        user?.userData[0]?.email
                       ) : (
                         <br />
                       )}
                     </p>
 
                     <p className="my-4">
-                      {user.userData[0].nationality ? (
-                        user.userData[0].nationality
+                      {user?.userData[0]?.gender ? (
+                        user?.userData[0]?.gender
                       ) : (
                         <br />
                       )}
                     </p>
 
                     <p className="my-4">
-                      {user.userData[0].dateOfBirth ? (
-                        user.userData[0].dateOfBirth
+                      {user?.userData[0]?.profession ? (
+                        user?.userData[0]?.profession
+                      ) : (
+                        <br />
+                      )}
+                    </p>
+
+                    <p className="my-4">
+                      {user?.userData[0]?.nationality ? (
+                        user?.userData[0]?.nationality
+                      ) : (
+                        <br />
+                      )}
+                    </p>
+
+                    <p className="my-4">
+                      {user?.userData[0]?.dateOfBirth ? (
+                        user?.userData[0]?.dateOfBirth
                       ) : (
                         <br />
                       )}

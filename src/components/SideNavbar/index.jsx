@@ -6,6 +6,7 @@ import logoutIcon from "../../assets/img/detailUser/logout-icon.png";
 import profileIcon from "../../assets/img/detailUser/profile-icon.png";
 import wishlistIcon from "../../assets/img/detailUser/wishlist-icon.png";
 import settingIcon from "../../assets/img/detailUser/setting-icon.png";
+import createIcon from "../../assets/img/detailUser/create-icon.png";
 import axios from "../../utils/axios";
 import "./index.css";
 import { useState, useEffect } from "react";
@@ -14,8 +15,10 @@ import { useNavigate } from "react-router-dom";
 export default function SideNavbar() {
   const [userData, setUserData] = useState([]);
   const [defaultImage, setDefaultImage] = useState("");
+  const [menuActive, setMenuActive] = useState("profile");
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
+  const adminData = userData.role;
 
   useEffect(() => {
     getUserData();
@@ -32,6 +35,7 @@ export default function SideNavbar() {
   };
 
   const navigationUser = (path) => {
+    setMenuActive(path);
     navigate(`/user/${path}/${userId}`);
   };
 
@@ -61,7 +65,10 @@ export default function SideNavbar() {
       </div>
       <div className="col mb-3">
         <button
-          className="btn w-75 text-start btn-hover"
+          className={
+            "btn w-75 text-start btn-hover " +
+            (menuActive === "profile" ? "text-primary fw-bold" : "")
+          }
           onClick={navigationDetailUser}
         >
           {" "}
@@ -70,7 +77,10 @@ export default function SideNavbar() {
       </div>
       <div className="col ms-3 mb-3">
         <button
-          className="btn w-75 text-start btn-hover"
+          className={
+            "btn w-75 text-start btn-hover " +
+            (menuActive === "edit" ? "text-primary fw-bold" : "")
+          }
           onClick={() => navigationUser("edit")}
         >
           {" "}
@@ -79,7 +89,10 @@ export default function SideNavbar() {
       </div>
       <div className="col ms-3 mb-3">
         <button
-          className="btn w-75 text-start btn-hover"
+          className={
+            "btn w-75 text-start btn-hover " +
+            (menuActive === "changepassword" ? "text-primary fw-bold" : "")
+          }
           onClick={() => navigationUser("changepassword")}
         >
           {" "}
@@ -87,13 +100,33 @@ export default function SideNavbar() {
         </button>
       </div>
       <div className="col mb-3">
-        <button className="btn w-75 text-start btn-hover">
+        {adminData === 1 ? (
+          <button className="btn w-75 text-start btn-hover">
+            {" "}
+            <img src={createIcon} /> Create Event
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
+      <div className="col mb-3">
+        <button
+          className={
+            "btn w-75 text-start btn-hover " +
+            (menuActive === "booking" ? "text-primary fw-bold" : "")
+          }
+        >
           {" "}
           <img src={bookingIcon} /> My Booking
         </button>
       </div>
       <div className="col mb-3">
-        <button className="btn w-75 text-start btn-hover">
+        <button
+          className={
+            "btn w-75 text-start btn-hover " +
+            (menuActive === "wishlist" ? "text-primary fw-bold" : "")
+          }
+        >
           {" "}
           <img src={wishlistIcon} alt="" /> My Wishlist
         </button>

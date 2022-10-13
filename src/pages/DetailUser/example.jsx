@@ -17,7 +17,7 @@ export default function DetailUser() {
     dateOfBirth: "",
   });
   const user = useSelector((state) => state.user);
-  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${user.userData.image}`;
+  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${user?.userData?.image}`;
 
   useEffect(() => {
     dispatch(getDataUserById(userId));
