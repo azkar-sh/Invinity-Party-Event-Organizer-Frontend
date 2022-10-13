@@ -43,6 +43,10 @@ export default function SideNavbar() {
     navigate(`/user/${userId}`);
   };
 
+  const navigationCreateEvent = () => {
+    navigate(`/create-event`);
+  };
+
   const userName = userData.name;
   const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${defaultImage}`;
   const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
@@ -101,7 +105,10 @@ export default function SideNavbar() {
       </div>
       <div className="col mb-3">
         {adminData === 1 ? (
-          <button className="btn w-75 text-start btn-hover">
+          <button
+            className="btn w-75 text-start btn-hover"
+            onClick={navigationCreateEvent}
+          >
             {" "}
             <img src={createIcon} /> Create Event
           </button>

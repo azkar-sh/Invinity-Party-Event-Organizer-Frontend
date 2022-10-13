@@ -9,6 +9,7 @@ import Notfound from "./pages/NotFound";
 import DetailUser from "./pages/DetailUser";
 import EditUser from "./pages/EditUser";
 import ChangePassword from "./pages/ChangePassword";
+import CreateEvent from "./pages/CreateEvent";
 
 import PublicRoute from "./utils/routes/PublicRoute";
 import PrivateRoute from "./utils/routes/PrivateRoute";
@@ -38,6 +39,7 @@ function App() {
             path="/user/changepassword/:userId"
             element={<ChangePassword />}
           />
+          <Route path="/create-event" element={<CreateEvent />} />
         </Route>
 
         {/* Admin Route */}
