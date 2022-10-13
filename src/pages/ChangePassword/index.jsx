@@ -2,16 +2,16 @@ import React from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import SideNavbar from "../../components/SideNavbar";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-import { getDataUserById, updateDataUser } from "../../stores/actions/user";
+import { updatePasswordUser } from "../../stores/actions/user";
 
 export default function ChangePassword() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userId } = useParams();
   const [updateData, setUpdateData] = useState({
@@ -19,10 +19,6 @@ export default function ChangePassword() {
   });
 
   useSelector((state) => state.user);
-
-  useEffect(() => {
-    dispatch(getDataUserById(userId));
-  }, [userId]);
 
   const handleChange = (e) => {
     setUpdateData({
@@ -32,8 +28,8 @@ export default function ChangePassword() {
   };
 
   const handleUpdate = () => {
-    dispatch(updateDataUser(userId, updateData));
-    navigate(`/user/${userId}`);
+    dispatch(updatePasswordUser(userId, updateData));
+    // navigate(`/user/${userId}`);
   };
 
   // console.log(setDefaultImage);
@@ -48,11 +44,11 @@ export default function ChangePassword() {
       <div className="container-fluid bg-light py-5">
         <div className="container">
           <div className="d-flex flex-row">
-            <div className="col-sm-3">
+            <div className="col-sm-4">
               {/* Side Navbar */}
               <SideNavbar />
             </div>
-            <div className="col-sm-9">
+            <div className="col-sm-8">
               <div className="container bg-white rounded-5">
                 <div className="px-4 pt-5">
                   <h2>Change Password</h2>
@@ -97,7 +93,7 @@ export default function ChangePassword() {
                           type="password"
                           className="form-control w-100"
                           name="confirmPassword"
-                          readOnly
+                          onChange={handleChange}
                         />
                       </div>
                     </div>

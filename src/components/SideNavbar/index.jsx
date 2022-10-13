@@ -35,6 +35,10 @@ export default function SideNavbar() {
     navigate(`/user/${path}/${userId}`);
   };
 
+  const navigationDetailUser = () => {
+    navigate(`/user/${userId}`);
+  };
+
   const userName = userData.name;
   const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${defaultImage}`;
   const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
@@ -56,7 +60,10 @@ export default function SideNavbar() {
         </div>
       </div>
       <div className="col mb-3">
-        <button className="btn w-75 text-start btn-hover">
+        <button
+          className="btn w-75 text-start btn-hover"
+          onClick={navigationDetailUser}
+        >
           {" "}
           <img src={profileIcon} alt="" /> Profile
         </button>

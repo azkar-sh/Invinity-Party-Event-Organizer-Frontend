@@ -47,6 +47,21 @@ const user = (state = initialState, action) => {
         userData: action.payload.data.data,
       };
 
+    case "UPDATE_PASSWORD_USER_PENDING":
+      return {
+        ...state,
+        data: [],
+      };
+    case "UPDATE_PASSWORD_USER_REJECTED":
+      return {
+        ...state,
+      };
+    case "UPDATE_PASSWORD_USER_FULFILLED":
+      return {
+        ...state,
+        userData: action.payload.data.data,
+      };
+
     default: {
       return state;
     }

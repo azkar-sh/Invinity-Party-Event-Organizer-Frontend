@@ -14,7 +14,8 @@ export default function Header() {
   const [userData, setUserData] = useState([]);
 
   const logout = () => {
-    localStorage.clear();
+    localStorage.removeItem("userId");
+    localStorage.removeItem("token");
     navigate("/");
   };
 

@@ -20,3 +20,10 @@ export const updateDataUser = (id, data) => {
     payload: axios.patch(`user/${id}`, data),
   };
 };
+
+export const updatePasswordUser = (id, data) => {
+  return {
+    type: "UPDATE_PASSWORD_USER",
+    payload: axios.patch(`user/updatePassword/${id}`, data),
+  };
+};

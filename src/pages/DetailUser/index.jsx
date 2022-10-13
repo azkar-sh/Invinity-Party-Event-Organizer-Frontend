@@ -13,13 +13,13 @@ export default function DetailUser() {
   const user = useSelector((state) => state.user);
   const { userId } = useParams();
   const [defaultImage, setDefaultImage] = useState("");
-  const userImageData = user.userData[0].image;
 
   useEffect(() => {
     dispatch(getDataUserById(userId));
     setDefaultImage(user.userData[0].image);
   }, [userId]);
 
+  const userImageData = user.userData[0].image;
   const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userImageData}`;
   const randomImage = `https://ui-avatars.com/api/?background=random&name=${user.userData[0].username}`;
 
@@ -57,7 +57,7 @@ export default function DetailUser() {
 
                     <p className="my-4">Birthday Date</p>
                   </div>
-                  <div className="col-sm-6">
+                  <div className="col-sm-5">
                     <p className="my-4">
                       {user.userData[0].name ? user.userData[0].name : <br />}
                     </p>
@@ -106,7 +106,7 @@ export default function DetailUser() {
                       )}
                     </p>
                   </div>
-                  <div className="col-sm-3">
+                  <div className="col-sm-4">
                     <img
                       src={defaultImage ? userImage : randomImage}
                       alt=""

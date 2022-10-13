@@ -8,36 +8,29 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import { getDataUserById, updateDataUser } from "../../stores/actions/user";
+import { updateDataUser } from "../../stores/actions/user";
 
 export default function DetailUser() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userId } = useParams();
-  const [updateData, setUpdateData] = useState({
-    name: "",
-    username: "",
-    gender: "",
-    profession: "",
-    nationality: "",
-    dateOfBirth: "",
-  });
 
   const user = useSelector((state) => state.user);
+  const [form, setForm] = useState(user.userData[0]);
 
   useEffect(() => {
-    dispatch(getDataUserById(userId));
-    setDefaultImage(userImage);
+    setDefaultImage(user.userData[0].image);
   }, [userId]);
 
   const handleChange = (e) => {
-    setUpdateData({
+    setForm({
+      ...form,
       [e.target.name]: e.target.value,
     });
   };
 
   const handleUpdate = () => {
-    dispatch(updateDataUser(userId, updateData));
+    dispatch(updateDataUser(userId, form));
     navigate(`/user/${userId}`);
   };
 
@@ -46,9 +39,6 @@ export default function DetailUser() {
   const userImageData = user.userData[0].image;
   const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userImageData}`;
   const randomImage = `https://ui-avatars.com/api/?background=random&name=${user.userData[0].username}`;
-
-  // console.log(setDefaultImage);
-  // console.log(handleChange);
 
   return (
     <div className="bg-light">
@@ -59,11 +49,11 @@ export default function DetailUser() {
       <div className="container-fluid bg-light py-5">
         <div className="container">
           <div className="d-flex flex-row">
-            <div className="col-sm-3">
+            <div className="col-sm-4">
               {/* Side Navbar */}
               <SideNavbar />
             </div>
-            <div className="col-sm-9">
+            <div className="col-sm-8">
               <div className="container bg-white rounded-5">
                 <div className="px-4 pt-5">
                   <h2>Edit Profile</h2>
@@ -77,7 +67,7 @@ export default function DetailUser() {
                           type="text"
                           className="form-control w-75"
                           name="name"
-                          placeholder={user.userData[0].name}
+                          placeholder={form.name}
                           onChange={handleChange}
                         />
                       </div>
@@ -92,7 +82,7 @@ export default function DetailUser() {
                           type="text"
                           className="form-control w-75"
                           name="username"
-                          placeholder={user.userData[0].username}
+                          placeholder={form.username}
                           onChange={handleChange}
                         />
                       </div>
@@ -105,22 +95,20 @@ export default function DetailUser() {
                           type="text"
                           className="form-control-plaintext w-75"
                           name="email"
-                          placeholder={user.userData[0].email}
+                          placeholder={form.email}
                           readOnly
                         />
                       </div>
                     </div>
 
                     <div className="mb-3 row">
-                      <label className="col-sm-3 col-form-label">
-                        Phone Number
-                      </label>
+                      <label className="col-sm-3 col-form-label">Phone</label>
                       <div className="col-sm-9">
                         <input
                           type="text"
                           className="form-control w-75"
                           name="phoneNumber"
-                          placeholder={user.userData[0].phoneNumber}
+                          placeholder={form.phoneNumber}
                           onChange={handleChange}
                         />
                       </div>
@@ -132,6 +120,7 @@ export default function DetailUser() {
                         <div
                           className="form-check form-check-inline"
                           onChange={handleChange}
+                          value={form.gender}
                         >
                           <input
                             className="form-check-input"
@@ -166,7 +155,7 @@ export default function DetailUser() {
                           type="text"
                           className="form-control w-75"
                           name="profession"
-                          placeholder={user.userData[0].profession}
+                          placeholder={form.profession}
                           onChange={handleChange}
                         />
                       </div>
@@ -181,7 +170,7 @@ export default function DetailUser() {
                           type="text"
                           className="form-control w-75"
                           name="nationality"
-                          placeholder={user.userData[0].nationality}
+                          placeholder={form.nationality}
                           onChange={handleChange}
                         />
                       </div>
@@ -200,7 +189,7 @@ export default function DetailUser() {
                           onBlur={(e) => {
                             e.target.type = "text";
                           }}
-                          placeholder={user.userData[0].dateOfBirth}
+                          value={form.dateOfBirth}
                           onChange={handleChange}
                         />
                       </div>
@@ -226,7 +215,7 @@ export default function DetailUser() {
                       className="w-100 rounded-circle"
                     />
                     <button className="btn btn-outline-primary mt-3">
-                      Change Image Profile
+                      Change Image
                     </button>
                     <br />
                     <small className="text-muted">
