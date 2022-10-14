@@ -43,8 +43,8 @@ export default function SideNavbar() {
     navigate(`/user/${userId}`);
   };
 
-  const navigationCreateEvent = () => {
-    navigate(`/create-event`);
+  const navigationAdmin = (path) => {
+    navigate(`/${path}`);
   };
 
   const userName = userData.name;
@@ -106,11 +106,30 @@ export default function SideNavbar() {
       <div className="col mb-3">
         {adminData === 1 ? (
           <button
-            className="btn w-75 text-start btn-hover"
-            onClick={navigationCreateEvent}
+            className={
+              "btn w-75 text-start btn-hover " +
+              (menuActive === "create-event" ? "text-primary fw-bold" : "")
+            }
+            onClick={() => navigationAdmin("create-event")}
           >
             {" "}
             <img src={createIcon} /> Create Event
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
+      <div className="col mb-3">
+        {adminData === 1 ? (
+          <button
+            className={
+              "btn w-75 text-start btn-hover " +
+              (menuActive === "manage-event" ? "text-primary fw-bold" : "")
+            }
+            onClick={() => navigationAdmin("manage-event")}
+          >
+            {" "}
+            <img src={createIcon} /> Manage Event
           </button>
         ) : (
           ""

@@ -17,6 +17,7 @@ export default function DetailUser() {
 
   const user = useSelector((state) => state.user);
   const [form, setForm] = useState(user.userData[0]);
+  const [updateImage, setUpdateImage] = useState(user.userData[0].image);
 
   useEffect(() => {
     setDefaultImage(user.userData[0].image);
@@ -34,8 +35,16 @@ export default function DetailUser() {
     navigate(`/user/${userId}`);
   };
 
-  const [defaultImage, setDefaultImage] = useState(null);
+  const handleChangeImage = (e) => {
+    setUpdateImage(e.target.files[0]);
+  };
 
+  const handleUpdateImage = () => {
+    dispatch(updateDataUser(userId, updateImage));
+    navigate(`/user/${userId}`);
+  };
+
+  const [defaultImage, setDefaultImage] = useState(null);
   const userImageData = user.userData[0].image;
   const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userImageData}`;
   const randomImage = `https://ui-avatars.com/api/?background=random&name=${user.userData[0].username}`;
@@ -209,12 +218,23 @@ export default function DetailUser() {
                     </div>
                   </div>
                   <div className="col-sm-4 text-center">
-                    <img
+                    <input
+                      type="file"
                       src={defaultImage ? userImage : randomImage}
                       alt=""
                       className="w-100 rounded-circle"
+                      onChange={handleChangeImage}
                     />
-                    <button className="btn btn-outline-primary mt-3">
+                    {/* <img
+                      src={defaultImage ? userImage : randomImage}
+                      alt=""
+                      className="w-100 rounded-circle"
+                      onChange={handleChangeImage}
+                    /> */}
+                    <button
+                      className="btn btn-outline-primary mt-3"
+                      onClick={handleUpdateImage}
+                    >
                       Change Image
                     </button>
                     <br />

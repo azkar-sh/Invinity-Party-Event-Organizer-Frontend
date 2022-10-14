@@ -10,6 +10,7 @@ import DetailUser from "./pages/DetailUser";
 import EditUser from "./pages/EditUser";
 import ChangePassword from "./pages/ChangePassword";
 import CreateEvent from "./pages/CreateEvent";
+import ManageEvent from "./pages/ManageEvent";
 
 import PublicRoute from "./utils/routes/PublicRoute";
 import PrivateRoute from "./utils/routes/PrivateRoute";
@@ -39,11 +40,12 @@ function App() {
             path="/user/changepassword/:userId"
             element={<ChangePassword />}
           />
-          <Route path="/create-event" element={<CreateEvent />} />
         </Route>
 
         {/* Admin Route */}
         <Route element={<PrivateRoute isAdmin={true} />}>
+          <Route path="/create-event" element={<CreateEvent />} />
+          <Route path="/manage-event" element={<ManageEvent />} />
           {/* <Route path="/order/:eventId" element={<Order />} /> */}
         </Route>
 

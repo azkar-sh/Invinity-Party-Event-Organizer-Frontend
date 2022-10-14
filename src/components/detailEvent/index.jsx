@@ -1,30 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import groupPeople from "../../assets/img/detailEvent/Group People.png";
 import maps from "../../assets/img/detailEvent/maps.png";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../utils/axios";
-// import sortIcon from "../../assets/img/sort-icon.png";
 
 export default function DetailEvent(props) {
   const navigate = useNavigate();
   const { eventId } = useParams();
   const dataUserId = localStorage.getItem("userId");
 
-  // const [addedWishlist, setAddedWishlist] = useState(false);
+  const [addedWishlist, setAddedWishlist] = useState();
 
-  const [dataWishlist, setDataWishlist] = useState({
+  const dataWishlist = {
     userId: dataUserId,
     eventId: eventId,
-  });
+  };
 
-  console.log(setDataWishlist);
-
-  const handleWishlist = async () => {
+  const getWishlistData = async () => {
     try {
-      await axios.post("/wishlist", dataWishlist);
-      alert("Added to wishlist");
+      const response = await axios.get(`/wishlist`);
+      const data = response.data.data;
+      const filterData = data.filter((item) => item.eventId == eventId);
+      if (filterData.length > 0) {
+        setAddedWishlist(false);
+      } else {
+        setAddedWishlist(true);
+      }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getWishlistData();
+  }, []);
+
+  const handleWishlist = () => {
+    if (addedWishlist) {
+      axios.post(`/wishlist`, dataWishlist);
+      setAddedWishlist(true);
+      getWishlistData();
+    } else {
+      axios.post(`/wishlist`, dataWishlist);
+      setAddedWishlist(false);
+      getWishlistData();
     }
   };
 
@@ -41,13 +60,21 @@ export default function DetailEvent(props) {
             alt="Event 1"
             className="d-block mx-auto w-75 rounded-5 mb-4"
           />
-
-          <button
-            className="btn btn-outline-primary d-block mx-auto mb-4"
-            onClick={() => handleWishlist()}
-          >
-            ♥️ Add To Wishlist
-          </button>
+          {addedWishlist ? (
+            <button
+              className="btn btn-outline-danger d-block mx-auto mb-4 border-0"
+              onClick={() => handleWishlist()}
+            >
+              ♥️ Delete To Wishlist
+            </button>
+          ) : (
+            <button
+              className="btn btn-outline-primary d-block mx-auto mb-4 border-0"
+              onClick={() => handleWishlist()}
+            >
+              ♥️ Add To Wishlist
+            </button>
+          )}
         </div>
         <div className="col-md-5 mb-4 mt-5">
           <h1 className="fw-bold mb-3">{props.data.name}</h1>

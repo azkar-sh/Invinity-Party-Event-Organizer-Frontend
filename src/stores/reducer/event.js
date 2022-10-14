@@ -16,7 +16,7 @@ const event = (state = initialState, action) => {
     case "GET_DATA_EVENT_FULFILLED":
       return {
         ...state,
-        eventData: action.payload.data.data[0],
+        eventData: action.payload.data.data,
       };
     case "GET_DATA_EVENT_BY_ID_PENDING":
       return {
@@ -30,7 +30,7 @@ const event = (state = initialState, action) => {
     case "GET_DATA_EVENT_BY_ID_FULFILLED":
       return {
         ...state,
-        eventData: action.payload.data.data[0],
+        eventData: action.payload.data.data,
       };
     case "UPDATE_DATA_EVENT_PENDING":
       return {
@@ -44,7 +44,7 @@ const event = (state = initialState, action) => {
     case "UPDATE_DATA_EVENT_FULFILLED":
       return {
         ...state,
-        eventData: action.payload.data.data[0],
+        eventData: action.payload.data.data,
       };
 
     default:

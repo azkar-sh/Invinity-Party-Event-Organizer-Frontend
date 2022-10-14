@@ -4,6 +4,7 @@ import Footer from "../../components/Footer";
 import SideNavbar from "../../components/SideNavbar";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "../../utils/axios";
 
 import { useSelector, useDispatch } from "react-redux";
 import { getDataUserById } from "../../stores/actions/user";
@@ -14,10 +15,23 @@ export default function DetailUser() {
   const { userId } = useParams();
   const [defaultImage, setDefaultImage] = useState("");
 
+  const getUserData = async () => {
+    try {
+      const response = await axios.get(`/user/${userId}`);
+      setDefaultImage(response.data.data[0].image);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     dispatch(getDataUserById(userId));
     setDefaultImage(user?.userData[0]?.image);
   }, [userId]);
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const userImageData = user?.userData[0]?.image;
   const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userImageData}`;

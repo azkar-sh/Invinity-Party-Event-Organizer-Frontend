@@ -9,16 +9,18 @@ import { createDataEvent } from "../../stores/actions/event";
 export default function CreateEvent() {
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState();
-  const [selectedFilePreview, setSelectedFilePreview] = useState();
+  const [showPreview, setShowPreview] = useState(false);
   const [preview, setPreview] = useState();
   const [data, setData] = useState({
     name: "",
     category: "",
     location: "",
     detail: "",
-    dateTimeShow: "YYYY-MM-DDThh:mm:ss.ms",
+    dateTimeShow: "",
     price: "",
   });
+
+  // const event = useSelector((state) => state.event);
 
   const handleCreateEvent = (e) => {
     e.preventDefault();
@@ -42,28 +44,25 @@ export default function CreateEvent() {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
-    if (!selectedFilePreview) {
+    if (!showPreview) {
       setPreview(undefined);
       return;
     }
 
-    const objectUrl = URL.createObjectURL(selectedFilePreview);
+    const objectUrl = URL.createObjectURL(selectedFile);
     setPreview(objectUrl);
 
-    // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedFilePreview]);
+  }, [selectedFile]);
 
   const onSelectFile = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFilePreview(undefined);
+      setShowPreview(undefined);
       return;
     }
 
-    // I've kept this example simple by using the first image instead of multiple
-    setSelectedFilePreview(e.target.files[0]);
+    setShowPreview(e.target.files[0]);
   };
   return (
     <div>
@@ -88,8 +87,8 @@ export default function CreateEvent() {
                   <div className="col-sm-12">
                     {/* Form Create Event */}
                     <div className="mb-3 row">
-                      <label className="col-sm-4 col-form-label">Name</label>
-                      <div className="col-sm-8">
+                      <label className="col-sm-3 col-form-label">Name</label>
+                      <div className="col-sm-9">
                         <input
                           type="text"
                           className="form-control w-100"
@@ -100,10 +99,10 @@ export default function CreateEvent() {
                     </div>
 
                     <div className="mb-3 row">
-                      <label className="col-sm-4 col-form-label">
+                      <label className="col-sm-3 col-form-label">
                         Category
                       </label>
-                      <div className="col-sm-8">
+                      <div className="col-sm-9">
                         <input
                           type="text"
                           className="form-control w-100"
@@ -114,10 +113,10 @@ export default function CreateEvent() {
                     </div>
 
                     <div className="mb-3 row">
-                      <label className="col-sm-4 col-form-label">
+                      <label className="col-sm-3 col-form-label">
                         Location
                       </label>
-                      <div className="col-sm-8">
+                      <div className="col-sm-9">
                         <input
                           type="text"
                           className="form-control w-100"
@@ -128,8 +127,8 @@ export default function CreateEvent() {
                     </div>
 
                     <div className="mb-3 row">
-                      <label className="col-sm-4 col-form-label">Detail</label>
-                      <div className="col-sm-8">
+                      <label className="col-sm-3 col-form-label">Detail</label>
+                      <div className="col-sm-9">
                         <input
                           type="text"
                           className="form-control w-100"
@@ -140,22 +139,22 @@ export default function CreateEvent() {
                     </div>
 
                     <div className="mb-3 row">
-                      <label className="col-sm-4 col-form-label">
+                      <label className="col-sm-3 col-form-label">
                         Date and Time Show
                       </label>
-                      <div className="col-sm-8">
+                      <div className="col-sm-9">
                         <input
                           type="datetime-local"
                           className="form-control w-100"
-                          name="confirmPassword"
+                          name="dateTimeShow"
                           onChange={handleChange}
                         />
                       </div>
                     </div>
 
                     <div className="mb-3 row">
-                      <label className="col-sm-4 col-form-label">Price</label>
-                      <div className="col-sm-8">
+                      <label className="col-sm-3 col-form-label">Price</label>
+                      <div className="col-sm-9">
                         <input
                           type="text"
                           className="form-control w-100"
@@ -166,8 +165,8 @@ export default function CreateEvent() {
                     </div>
 
                     <div className="mb-3 row">
-                      <label className="col-sm-4 col-form-label">Image</label>
-                      <div className="col-sm-8">
+                      <label className="col-sm-3 col-form-label">Image</label>
+                      <div className="col-sm-9">
                         <input
                           type="file"
                           className="form-control w-100 mb-2"
@@ -177,7 +176,7 @@ export default function CreateEvent() {
                             handleImage(e);
                           }}
                         />
-                        {selectedFilePreview && (
+                        {selectedFile && (
                           <img src={preview} className="w-100" />
                         )}
                       </div>
