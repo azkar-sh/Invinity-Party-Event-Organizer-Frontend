@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import SideNavbar from "../../components/SideNavbar";
+import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { createDataEvent } from "../../stores/actions/event";
 
 export default function CreateEvent() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState();
   const [showPreview, setShowPreview] = useState(false);
   const [preview, setPreview] = useState();
@@ -33,6 +35,7 @@ export default function CreateEvent() {
     formData.append("price", data.price);
     formData.append("image", selectedFile);
     dispatch(createDataEvent(formData));
+    navigate("/manage-event");
   };
 
   const handleImage = (e) => {

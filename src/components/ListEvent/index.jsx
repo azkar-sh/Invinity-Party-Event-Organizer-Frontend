@@ -2,8 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { useState } from "react";
-// import { useEffect } from "react";
-// import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 import { updateDataEvent } from "../../stores/actions/event";

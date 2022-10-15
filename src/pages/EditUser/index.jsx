@@ -23,6 +23,7 @@ export default function DetailUser() {
     setDefaultImage(user.userData[0].image);
   }, [userId]);
 
+  //Handle Update Data
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -35,6 +36,7 @@ export default function DetailUser() {
     // navigate(`/user/${userId}`);
   };
 
+  //Handle Update Image
   const handleImage = (e) => {
     setUpdateImage(e.target.files[0]);
   };
@@ -234,6 +236,7 @@ export default function DetailUser() {
                       <input
                         type="file"
                         className="form-control w-100 mb-2"
+                        style={{ display: "none" }}
                         name="image"
                         onChange={(e) => {
                           // onSelectFile(e);
