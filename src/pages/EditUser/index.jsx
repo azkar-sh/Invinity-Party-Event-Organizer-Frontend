@@ -6,12 +6,12 @@ import { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-import { updateDataUser } from "../../stores/actions/user";
+import { updateDataUser, updateImageUser } from "../../stores/actions/user";
 
 export default function DetailUser() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userId } = useParams();
 
@@ -32,16 +32,20 @@ export default function DetailUser() {
 
   const handleUpdate = () => {
     dispatch(updateDataUser(userId, form));
-    navigate(`/user/${userId}`);
+    // navigate(`/user/${userId}`);
   };
 
-  const handleChangeImage = (e) => {
+  const handleImage = (e) => {
     setUpdateImage(e.target.files[0]);
   };
 
-  const handleUpdateImage = () => {
-    dispatch(updateDataUser(userId, updateImage));
-    navigate(`/user/${userId}`);
+  const handleUpdateImage = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("image", updateImage);
+    dispatch(updateImageUser(userId, formData));
+    // navigate(`/user/${userId}`);
+    console.log(updateImage);
   };
 
   const [defaultImage, setDefaultImage] = useState(null);
@@ -218,19 +222,30 @@ export default function DetailUser() {
                     </div>
                   </div>
                   <div className="col-sm-4 text-center">
-                    <input
-                      type="file"
-                      src={defaultImage ? userImage : randomImage}
-                      alt=""
-                      className="w-100 rounded-circle"
-                      onChange={handleChangeImage}
-                    />
-                    {/* <img
-                      src={defaultImage ? userImage : randomImage}
-                      alt=""
-                      className="w-100 rounded-circle"
-                      onChange={handleChangeImage}
-                    /> */}
+                    <label>
+                      {/* <input
+                        type="file"
+                        name=""
+                        // style={{ display: "none" }}
+                        onChange={(e) => {
+                          handleImage(e);
+                        }}
+                      /> */}
+                      <input
+                        type="file"
+                        className="form-control w-100 mb-2"
+                        name="image"
+                        onChange={(e) => {
+                          // onSelectFile(e);
+                          handleImage(e);
+                        }}
+                      />
+                      <img
+                        src={defaultImage ? userImage : randomImage}
+                        alt=""
+                        className="w-100 rounded-circle"
+                      />
+                    </label>
                     <button
                       className="btn btn-outline-primary mt-3"
                       onClick={handleUpdateImage}
