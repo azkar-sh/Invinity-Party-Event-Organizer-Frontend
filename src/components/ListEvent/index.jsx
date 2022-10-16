@@ -4,13 +4,18 @@ import moment from "moment";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { updateDataEvent } from "../../stores/actions/event";
+import {
+  updateDataEvent,
+  deleteDataEvent,
+  getDataEvent,
+} from "../../stores/actions/event";
 
 export default function ListEvent(props) {
   const dateShow = moment(props.data.dateTimeShow).format("dddd, DD MMM");
   const dateOnly = moment(props.data.dateTimeShow).format("DD");
   const monthOnly = moment(props.data.dateTimeShow).format("ddd");
   const [form, setForm] = useState(props.data);
+  const [formImage, setFormImage] = useState(props.data.image);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,9 +34,32 @@ export default function ListEvent(props) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleImage = (e) => {
+    setFormImage(e.target.files[0]);
+  };
+
   const handleUpdate = () => {
-    dispatch(updateDataEvent(eventIdData, form));
-    alert("Update Event Success");
+    const formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("category", form.category);
+    formData.append("location", form.location);
+    formData.append("detail", form.detail);
+    formData.append("dateTimeShow", form.dateTimeShow);
+    formData.append("price", form.price);
+    formData.append("image", formImage);
+    dispatch(updateDataEvent(eventIdData, formData)).then(() => {
+      dispatch(getDataEvent());
+      alert("Update Event Success");
+      window.location.reload();
+    });
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteDataEvent(eventIdData)).then(() => {
+      dispatch(getDataEvent());
+      alert("Delete Event Success");
+      window.location.reload();
+    });
   };
 
   return (
@@ -59,10 +87,19 @@ export default function ListEvent(props) {
           >
             Update
           </button>
-          <button className="btn btn-sm text-danger">Delete</button>
+          <button
+            className="btn btn-sm text-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            onClick={handleGetId}
+          >
+            Delete
+          </button>
         </div>
       </div>
       <hr />
+
+      {/* Modal for Update Event */}
       <div
         className="modal fade"
         id="updateEventModal"
@@ -165,12 +202,8 @@ export default function ListEvent(props) {
                     type="file"
                     className="form-control w-100 mb-2"
                     name="image"
-                    // onChange={(e) => {
-                    // onSelectFile(e);
-                    // handleImage(e);
-                    // }}
+                    onChange={handleImage}
                   />
-                  {/* {selectedFile && <img src={preview} className="w-100" />} */}
                 </div>
               </div>
             </div>
@@ -188,6 +221,53 @@ export default function ListEvent(props) {
                 onClick={handleUpdate}
               >
                 Save changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Modal for Delete Event */}
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="deleteEventModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1
+                className="modal-title fs-5 text-danger"
+                id="deleteEventModalLabel"
+              >
+                Warning!
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <p> Are you sure want delete the event? </p>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-outline-danger"
+                onClick={handleDelete}
+              >
+                Delete
               </button>
             </div>
           </div>

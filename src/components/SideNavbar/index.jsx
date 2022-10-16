@@ -152,6 +152,7 @@ export default function SideNavbar() {
             "btn w-75 text-start btn-hover " +
             (menuActive === "wishlist" ? "text-primary fw-bold" : "")
           }
+          onClick={() => navigationUser("wishlist")}
         >
           {" "}
           <img src={wishlistIcon} alt="" /> My Wishlist

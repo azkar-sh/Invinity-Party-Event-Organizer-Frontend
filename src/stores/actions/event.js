@@ -27,3 +27,10 @@ export const createDataEvent = (data) => {
     payload: axios.post(`event`, data),
   };
 };
+
+export const deleteDataEvent = (id) => {
+  return {
+    type: "DELETE_DATA_EVENT",
+    payload: axios.delete(`event/${id}`),
+  };
+};

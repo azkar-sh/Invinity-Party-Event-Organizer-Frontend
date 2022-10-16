@@ -46,7 +46,7 @@ export default function Detail() {
           ) : (
             <div className="text-center">
               <img src={loadingGif} alt="" className="w-50" />
-              {/* <h3>Please Wait!</h3> */}
+              <h3>Please Wait!</h3>
             </div>
           )}
         </div>

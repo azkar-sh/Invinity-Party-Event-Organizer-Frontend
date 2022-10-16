@@ -6,12 +6,16 @@ import { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { updateDataUser, updateImageUser } from "../../stores/actions/user";
+import {
+  updateDataUser,
+  updateImageUser,
+  getDataUser,
+} from "../../stores/actions/user";
 
 export default function DetailUser() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userId } = useParams();
 
@@ -32,8 +36,11 @@ export default function DetailUser() {
   };
 
   const handleUpdate = () => {
-    dispatch(updateDataUser(userId, form));
-    // navigate(`/user/${userId}`);
+    dispatch(updateDataUser(userId, form)).then(() => {
+      dispatch(getDataUser());
+      alert("Update Data Success");
+      navigate(`/user/${userId}`);
+    });
   };
 
   //Handle Update Image
@@ -45,9 +52,11 @@ export default function DetailUser() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", updateImage);
-    dispatch(updateImageUser(userId, formData));
-    // navigate(`/user/${userId}`);
-    console.log(updateImage);
+    dispatch(updateImageUser(userId, formData)).then(() => {
+      dispatch(getDataUser());
+      alert("Update Image Success");
+      navigate(`/user/${userId}`);
+    });
   };
 
   const [defaultImage, setDefaultImage] = useState(null);

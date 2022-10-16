@@ -46,6 +46,19 @@ const event = (state = initialState, action) => {
         ...state,
         eventData: action.payload.data.data,
       };
+    case "DELETE_DATA_EVENT_PENDING":
+      return {
+        ...state,
+        data: [],
+      };
+    case "DELETE_DATA_EVENT_REJECTED":
+      return {
+        ...state,
+      };
+    case "DELETE_DATA_EVENT_FULFILLED":
+      return {
+        ...state,
+      };
 
     default:
       return state;

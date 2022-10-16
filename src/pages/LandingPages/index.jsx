@@ -14,6 +14,7 @@ import partner1 from "../../assets/img/LandingPage/partner-1.png";
 import partner2 from "../../assets/img/LandingPage/partner-2.png";
 import partner3 from "../../assets/img/LandingPage/partner-3.png";
 import CardEvent from "../../components/cardEvent";
+import comingSoon from "../../assets/img/coming-soon.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./index.css";
@@ -205,7 +206,7 @@ function Landing() {
                   ))
                 ) : (
                   <div className="text-center">
-                    <h3>Data Not Found !</h3>
+                    <img src={comingSoon} alt="coming-soon" className="w-50" />
                   </div>
                 )}
               </div>

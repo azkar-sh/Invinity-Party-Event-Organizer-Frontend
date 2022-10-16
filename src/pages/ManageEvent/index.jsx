@@ -15,6 +15,9 @@ export default function ManageEvent() {
 
   useEffect(() => {
     dispatch(getDataEvent());
+  }, []);
+
+  useEffect(() => {
     setData(event.eventData);
   }, []);
 

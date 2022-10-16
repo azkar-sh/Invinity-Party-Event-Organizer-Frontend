@@ -5,7 +5,7 @@ import SideNavbar from "../../components/SideNavbar";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import { createDataEvent } from "../../stores/actions/event";
+import { createDataEvent, getDataEvent } from "../../stores/actions/event";
 
 export default function CreateEvent() {
   const dispatch = useDispatch();
@@ -34,8 +34,11 @@ export default function CreateEvent() {
     formData.append("dateTimeShow", data.dateTimeShow);
     formData.append("price", data.price);
     formData.append("image", selectedFile);
-    dispatch(createDataEvent(formData));
-    navigate("/manage-event");
+    dispatch(createDataEvent(formData)).then(() => {
+      dispatch(getDataEvent());
+      alert("Create Event Success");
+      navigate("/manage-event");
+    });
   };
 
   const handleImage = (e) => {

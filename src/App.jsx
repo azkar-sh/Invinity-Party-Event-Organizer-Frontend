@@ -11,6 +11,7 @@ import EditUser from "./pages/EditUser";
 import ChangePassword from "./pages/ChangePassword";
 import CreateEvent from "./pages/CreateEvent";
 import ManageEvent from "./pages/ManageEvent";
+import Wishlist from "./pages/Wishlist";
 
 import PublicRoute from "./utils/routes/PublicRoute";
 import PrivateRoute from "./utils/routes/PrivateRoute";
@@ -40,6 +41,7 @@ function App() {
             path="/user/changepassword/:userId"
             element={<ChangePassword />}
           />
+          <Route path="/user/wishlist/:userId" element={<Wishlist />} />
         </Route>
 
         {/* Admin Route */}

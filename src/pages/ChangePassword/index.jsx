@@ -6,12 +6,12 @@ import { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { updatePasswordUser } from "../../stores/actions/user";
+import { updatePasswordUser, getDataUser } from "../../stores/actions/user";
 
 export default function ChangePassword() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userId } = useParams();
   const [updateData, setUpdateData] = useState({
@@ -28,12 +28,12 @@ export default function ChangePassword() {
   };
 
   const handleUpdate = () => {
-    dispatch(updatePasswordUser(userId, updateData));
-    // navigate(`/user/${userId}`);
+    dispatch(updatePasswordUser(userId, updateData)).then(() => {
+      dispatch(getDataUser());
+      alert("Update Password Success");
+      navigate(`/user/${userId}`);
+    });
   };
-
-  // console.log(setDefaultImage);
-  // console.log(handleChange);
 
   return (
     <div className="bg-light">
