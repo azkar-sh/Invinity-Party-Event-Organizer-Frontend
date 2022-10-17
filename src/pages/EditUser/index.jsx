@@ -244,7 +244,7 @@ export default function DetailUser() {
                       /> */}
                       <input
                         type="file"
-                        className="form-control w-100 mb-2"
+                        // className="form-control w-100 mb-2"
                         style={{ display: "none" }}
                         name="image"
                         onChange={(e) => {
@@ -258,6 +258,7 @@ export default function DetailUser() {
                         className="w-100 rounded-circle"
                       />
                     </label>
+                    <br />
                     <button
                       className="btn btn-outline-primary mt-3"
                       onClick={handleUpdateImage}
