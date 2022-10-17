@@ -47,6 +47,13 @@ export default function SideNavbar() {
     navigate(`/${path}`);
   };
 
+  const handleLogout = () => {
+    if (confirm("Are you sure want to logout?")) {
+      localStorage.clear();
+      navigate("/");
+    }
+  };
+
   const userName = userData.name;
   const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${defaultImage}`;
   const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
@@ -165,7 +172,10 @@ export default function SideNavbar() {
         </button>
       </div>
       <div className="col mb-3">
-        <button className="btn w-75 text-start text-danger btn-hover">
+        <button
+          className="btn w-75 text-start text-danger btn-hover"
+          onClick={handleLogout}
+        >
           {" "}
           <img src={logoutIcon} alt="" /> Logout
         </button>

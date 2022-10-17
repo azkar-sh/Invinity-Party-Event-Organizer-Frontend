@@ -14,10 +14,10 @@ export default function Header() {
   const [userData, setUserData] = useState([]);
 
   const logout = () => {
-    localStorage.clear();
-    // localStorage.removeItem("userId");
-    // localStorage.removeItem("token");
-    navigate("/");
+    if (confirm("Are you sure want to logout?")) {
+      localStorage.clear();
+      navigate("/");
+    }
   };
 
   useEffect(() => {
@@ -125,7 +125,10 @@ export default function Header() {
                         <hr className="dropdown-divider" />
                       </li>
                       <li>
-                        <a className="dropdown-item" onClick={logout}>
+                        <a
+                          className="dropdown-item text-danger"
+                          onClick={logout}
+                        >
                           Logout
                         </a>
                       </li>
