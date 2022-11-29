@@ -3,12 +3,17 @@ import authBanner from "../../assets/img/Auth/auth-banner.png";
 import logo from "../../assets/img/Inviticket.png";
 import googleIcon from "../../assets/img/Auth/google-icon.png";
 import facebookIcon from "../../assets/img/Auth/facebook-icon.png";
-import axios from "../../utils/axios";
+// import axios from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../stores/actions/auth";
+import { getDataUserById } from "../../stores/actions/user";
+import { getDataEvent } from "../../stores/actions/event";
 
 function Signin() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [form, setForm] = useState({
     email: "",
@@ -17,16 +22,24 @@ function Signin() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = async () => {
-    try {
-      const result = await axios.post("auth/login", form);
-      localStorage.setItem("userId", result.data.data.userId);
-      localStorage.setItem("token", result.data.data.token);
-      alert(JSON.stringify(result.data.msg));
-      navigate("/");
-    } catch (error) {
-      alert(error.response.data.msg);
-    }
+  const handleLogin = () => {
+    dispatch(login(form))
+      .then((response) => {
+        localStorage.setItem("token", response.value.data.data.token);
+        dispatch(getDataUserById(response.value.data.data.userId));
+        dispatch(getDataEvent());
+        alert("Login Success");
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      })
+      // const result = await axios.post("auth/login", form);
+      // localStorage.setItem("userId", result.data.data.userId);
+      // localStorage.setItem("token", result.data.data.token);
+      // alert(JSON.stringify(result.data.msg));
+      .catch((error) => {
+        alert(error.response.data.msg);
+      });
   };
 
   const handleInputChange = (e) => {

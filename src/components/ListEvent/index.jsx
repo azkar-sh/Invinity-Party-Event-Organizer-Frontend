@@ -16,7 +16,6 @@ export default function ListEvent(props) {
   const monthOnly = moment(props.data.dateTimeShow).format("ddd");
   const [form, setForm] = useState(props.data);
   const [formImage, setFormImage] = useState(props.data.image);
-  // const [dataEvent, setDataEvent] = useState({});
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,8 +26,6 @@ export default function ListEvent(props) {
 
   const handleGetId = () => {
     localStorage.setItem("eventId", props.data.eventId);
-    // setDataEvent(data);
-    // console.log(data);
   };
 
   const eventIdData = localStorage.getItem("eventId");
@@ -58,13 +55,11 @@ export default function ListEvent(props) {
   };
 
   const handleDelete = () => {
-    // console.log(dataEvent);
     dispatch(deleteDataEvent(eventIdData)).then(() => {
       dispatch(getDataEvent());
       alert("Delete Event Success");
     });
   };
-  // console.log(dataEvent);
 
   return (
     <div>

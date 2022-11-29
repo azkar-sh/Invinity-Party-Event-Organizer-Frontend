@@ -1,17 +1,14 @@
 import React from "react";
 import logo from "../../assets/img/Inviticket.png";
-// import noPhoto from "../../assets/img/no-photo.png";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "../../utils/axios";
+import { useSelector } from "react-redux";
 
 export default function Header() {
   const navigate = useNavigate();
+  const userData = useSelector((state) => state.user.userData);
   const isLogin = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
-  const [defaultImage, setDefaultImage] = useState("");
-  const [userData, setUserData] = useState([]);
+  const isAdmin = userData?.role;
 
   const logout = () => {
     if (confirm("Are you sure want to logout?")) {
@@ -20,30 +17,16 @@ export default function Header() {
     }
   };
 
-  useEffect(() => {
-    getUserData();
-  }, []);
-
-  const getUserData = async () => {
-    try {
-      const response = await axios.get(`/user/${userId}`);
-      setUserData(response.data.data[0]);
-      setDefaultImage(response.data.data[0].image);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const userName = userData.name;
-  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${defaultImage}`;
-  const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
+  const userName = userData?.name;
+  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userData?.image}`;
+  const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData?.username}`;
 
   const navigationHandler = (path) => {
     navigate(`/${path}`);
   };
 
   const navigationHandlerUser = () => {
-    navigate(`/user/${userId}`);
+    navigate(`/user/${userData.userId}`);
   };
 
   return (
@@ -79,17 +62,32 @@ export default function Header() {
                     className="nav-link active"
                     aria-current="page"
                     onClick={() => navigationHandler("")}
+                    style={{ cursor: "pointer" }}
                   >
                     Home
                   </a>
                 </li>
+                {isAdmin === 1 ? (
+                  <li className="nav-item">
+                    <a
+                      className="nav-link active"
+                      aria-current="page"
+                      onClick={() => navigationHandler("create-event")}
+                      style={{ cursor: "pointer" }}
+                    >
+                      Create Event
+                    </a>
+                  </li>
+                ) : (
+                  <></>
+                )}
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">
-                    Create Event
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">
+                  <a
+                    className="nav-link active"
+                    aria-current="page"
+                    href="#"
+                    style={{ cursor: "pointer" }}
+                  >
                     Location
                   </a>
                 </li>
@@ -105,7 +103,7 @@ export default function Header() {
                       aria-expanded="false"
                     >
                       <img
-                        src={defaultImage ? userImage : randomImage}
+                        src={userData?.image !== null ? userImage : randomImage}
                         alt="avatar"
                         className="rounded-pill mx-3 border border-2 border-primary"
                         style={{ width: "40px" }}

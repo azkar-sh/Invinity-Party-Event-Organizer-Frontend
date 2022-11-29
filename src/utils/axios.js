@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const axiosApiIntances = axios.create({
-  baseURL: "http://localhost:3001/api/",
-  // baseURL: "https://event-organizing-backend.vercel.app/api/",
+  // baseURL: "http://localhost:3001/api/",
+  baseURL: "https://invinity-party-event-organizer-backend.vercel.app/api/",
 });
 
 // Add a request interceptor

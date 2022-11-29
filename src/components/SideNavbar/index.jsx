@@ -7,32 +7,17 @@ import profileIcon from "../../assets/img/detailUser/profile-icon.png";
 import wishlistIcon from "../../assets/img/detailUser/wishlist-icon.png";
 import settingIcon from "../../assets/img/detailUser/setting-icon.png";
 import createIcon from "../../assets/img/detailUser/create-icon.png";
-import axios from "../../utils/axios";
 import "./index.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function SideNavbar() {
-  const [userData, setUserData] = useState([]);
-  const [defaultImage, setDefaultImage] = useState("");
+  const userData = useSelector((state) => state.user.userData);
   const [menuActive, setMenuActive] = useState("profile");
-  const userId = localStorage.getItem("userId");
+  const userId = userData.userId;
   const navigate = useNavigate();
-  const adminData = userData.role;
-
-  useEffect(() => {
-    getUserData();
-  }, []);
-
-  const getUserData = async () => {
-    try {
-      const response = await axios.get(`/user/${userId}`);
-      setUserData(response.data.data[0]);
-      setDefaultImage(response.data.data[0].image);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const adminData = userData?.role;
 
   const navigationUser = (path) => {
     setMenuActive(path);
@@ -55,7 +40,7 @@ export default function SideNavbar() {
   };
 
   const userName = userData.name;
-  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${defaultImage}`;
+  const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userData.image}`;
   const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
 
   return (
@@ -64,7 +49,7 @@ export default function SideNavbar() {
         <div className="col d-flex align-items-center mb-3">
           <div className="col-sm-3">
             <img
-              src={defaultImage ? userImage : randomImage}
+              src={userData.image !== null ? userImage : randomImage}
               alt=""
               className="w-50 rounded-5 border border-primary"
             />

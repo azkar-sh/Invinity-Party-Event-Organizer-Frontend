@@ -2,40 +2,15 @@ import React from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import SideNavbar from "../../components/SideNavbar";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "../../utils/axios";
 
-import { useSelector, useDispatch } from "react-redux";
-import { getDataUserById } from "../../stores/actions/user";
+import { useSelector } from "react-redux";
 
 export default function DetailUser() {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const { userId } = useParams();
-  const [defaultImage, setDefaultImage] = useState("");
+  const userData = useSelector((state) => state.user.userData);
 
-  const getUserData = async () => {
-    try {
-      const response = await axios.get(`/user/${userId}`);
-      setDefaultImage(response.data.data[0].image);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    dispatch(getDataUserById(userId));
-    setDefaultImage(user?.userData[0]?.image);
-  }, [userId]);
-
-  useEffect(() => {
-    getUserData();
-  }, []);
-
-  const userImageData = user?.userData[0]?.image;
+  const userImageData = userData?.image;
   const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userImageData}`;
-  const randomImage = `https://ui-avatars.com/api/?background=random&name=${user?.userData[0]?.username}`;
+  const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData?.username}`;
 
   return (
     <div className="bg-light">
@@ -73,64 +48,36 @@ export default function DetailUser() {
                   </div>
                   <div className="col-sm-5">
                     <p className="my-4">
-                      {user?.userData[0]?.name ? (
-                        user?.userData[0]?.name
-                      ) : (
-                        <br />
-                      )}
+                      {userData?.name ? userData?.name : <br />}
                     </p>
 
                     <p className="my-4">
-                      {user?.userData[0]?.username ? (
-                        user?.userData[0]?.username
-                      ) : (
-                        <br />
-                      )}
+                      {userData?.username ? userData?.username : <br />}
                     </p>
 
                     <p className="my-4">
-                      {user?.userData[0]?.email ? (
-                        user?.userData[0]?.email
-                      ) : (
-                        <br />
-                      )}
+                      {userData?.email ? userData?.email : <br />}
                     </p>
 
                     <p className="my-4">
-                      {user?.userData[0]?.gender ? (
-                        user?.userData[0]?.gender
-                      ) : (
-                        <br />
-                      )}
+                      {userData?.gender ? userData?.gender : <br />}
                     </p>
 
                     <p className="my-4">
-                      {user?.userData[0]?.profession ? (
-                        user?.userData[0]?.profession
-                      ) : (
-                        <br />
-                      )}
+                      {userData?.profession ? userData?.profession : <br />}
                     </p>
 
                     <p className="my-4">
-                      {user?.userData[0]?.nationality ? (
-                        user?.userData[0]?.nationality
-                      ) : (
-                        <br />
-                      )}
+                      {userData?.nationality ? userData?.nationality : <br />}
                     </p>
 
                     <p className="my-4">
-                      {user?.userData[0]?.dateOfBirth ? (
-                        user?.userData[0]?.dateOfBirth
-                      ) : (
-                        <br />
-                      )}
+                      {userData?.dateOfBirth ? userData?.dateOfBirth : <br />}
                     </p>
                   </div>
                   <div className="col-sm-4">
                     <img
-                      src={defaultImage ? userImage : randomImage}
+                      src={userData !== null ? userImage : randomImage}
                       alt=""
                       className="w-100 rounded-circle"
                     />

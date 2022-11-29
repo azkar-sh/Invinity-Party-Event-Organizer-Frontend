@@ -16,7 +16,7 @@ const user = (state = initialState, action) => {
     case "GET_DATA_USER_FULFILLED":
       return {
         ...state,
-        userData: action.payload.data.data,
+        userData: action.payload.data.data[0],
       };
     case "GET_DATA_USER_BY_ID_PENDING":
       return {
@@ -30,7 +30,7 @@ const user = (state = initialState, action) => {
     case "GET_DATA_USER_BY_ID_FULFILLED":
       return {
         ...state,
-        userData: action.payload.data.data,
+        userData: action.payload.data.data[0],
       };
     case "UPDATE_DATA_USER_PENDING":
       return {
