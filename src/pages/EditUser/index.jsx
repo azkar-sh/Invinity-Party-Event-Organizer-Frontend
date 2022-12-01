@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import {
   updateDataUser,
   updateImageUser,
-  getDataUser,
+  getDataUserById,
 } from "../../stores/actions/user";
 
 export default function DetailUser() {
@@ -19,13 +19,15 @@ export default function DetailUser() {
   const dispatch = useDispatch();
   const { userId } = useParams();
 
-  const user = useSelector((state) => state.user);
-  const [form, setForm] = useState(user.userData[0]);
-  const [updateImage, setUpdateImage] = useState(user.userData[0].image);
+  const userData = useSelector((state) => state.user.userData);
+  const [form, setForm] = useState(userData);
+  const [updateImage, setUpdateImage] = useState(userData.image);
 
   useEffect(() => {
-    setDefaultImage(user.userData[0].image);
+    setDefaultImage(userData.image);
   }, [userId]);
+
+  console.log(userData);
 
   //Handle Update Data
   const handleChange = (e) => {
@@ -37,7 +39,7 @@ export default function DetailUser() {
 
   const handleUpdate = () => {
     dispatch(updateDataUser(userId, form)).then(() => {
-      dispatch(getDataUser());
+      dispatch(getDataUserById(userData.userId));
       alert("Update Data Success");
       navigate(`/user/${userId}`);
     });
@@ -53,16 +55,16 @@ export default function DetailUser() {
     const formData = new FormData();
     formData.append("image", updateImage);
     dispatch(updateImageUser(userId, formData)).then(() => {
-      dispatch(getDataUser());
+      dispatch(getDataUserById(userData.userId));
       alert("Update Image Success");
       navigate(`/user/${userId}`);
     });
   };
 
   const [defaultImage, setDefaultImage] = useState(null);
-  const userImageData = user.userData[0].image;
+  const userImageData = userData.image;
   const userImage = `https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${userImageData}`;
-  const randomImage = `https://ui-avatars.com/api/?background=random&name=${user.userData[0].username}`;
+  const randomImage = `https://ui-avatars.com/api/?background=random&name=${userData.username}`;
 
   return (
     <div className="bg-light">

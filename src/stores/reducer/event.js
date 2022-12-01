@@ -7,7 +7,7 @@ const event = (state = initialState, action) => {
     case "GET_DATA_EVENT_PENDING":
       return {
         ...state,
-        data: [],
+        eventData: [],
       };
     case "GET_DATA_EVENT_REJECTED":
       return {
@@ -35,7 +35,7 @@ const event = (state = initialState, action) => {
     case "UPDATE_DATA_EVENT_PENDING":
       return {
         ...state,
-        data: [],
+        eventData: [],
       };
     case "UPDATE_DATA_EVENT_REJECTED":
       return {
@@ -49,7 +49,7 @@ const event = (state = initialState, action) => {
     case "DELETE_DATA_EVENT_PENDING":
       return {
         ...state,
-        data: [],
+        eventData: [],
       };
     case "DELETE_DATA_EVENT_REJECTED":
       return {
@@ -58,6 +58,7 @@ const event = (state = initialState, action) => {
     case "DELETE_DATA_EVENT_FULFILLED":
       return {
         ...state,
+        eventData: action.payload.data.data,
       };
 
     default:

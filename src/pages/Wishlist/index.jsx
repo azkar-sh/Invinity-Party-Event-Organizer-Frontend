@@ -5,24 +5,12 @@ import SideNavbar from "../../components/SideNavbar";
 import ListWishlist from "../../components/ListWishlist";
 import { useNavigate } from "react-router-dom";
 
-import { getDataWishlistByUserId } from "../../stores/actions/wishlist";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Wishlist() {
-  const wishlist = useSelector((state) => state.wishlist);
-  const dispatch = useDispatch();
-  const [data, setData] = useState([]);
-  const userId = localStorage.getItem("userId");
+  const data = useSelector((state) => state.wishlist.wishlistData);
+
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(getDataWishlistByUserId(userId));
-  }, [userId]);
-
-  useEffect(() => {
-    setData(wishlist.wishlistData);
-  }, []);
 
   const handleNavigate = () => {
     navigate("/");

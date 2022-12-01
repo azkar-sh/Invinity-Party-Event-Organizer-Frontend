@@ -10,6 +10,10 @@ import { useDispatch } from "react-redux";
 import { login } from "../../stores/actions/auth";
 import { getDataUserById } from "../../stores/actions/user";
 import { getDataEvent } from "../../stores/actions/event";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getDataWishlistByUserId } from "../../stores/actions/wishlist";
+import { getBookingDataByUserId } from "../../stores/actions/booking";
 
 function Signin() {
   const navigate = useNavigate();
@@ -25,20 +29,22 @@ function Signin() {
   const handleLogin = () => {
     dispatch(login(form))
       .then((response) => {
+        toast.success(response.value.data.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
         localStorage.setItem("token", response.value.data.data.token);
         dispatch(getDataUserById(response.value.data.data.userId));
+        dispatch(getDataWishlistByUserId(response.value.data.data.userId));
+        dispatch(getBookingDataByUserId(response.value.data.data.userId));
         dispatch(getDataEvent());
-        alert("Login Success");
         setTimeout(() => {
           navigate("/");
         }, 3000);
       })
-      // const result = await axios.post("auth/login", form);
-      // localStorage.setItem("userId", result.data.data.userId);
-      // localStorage.setItem("token", result.data.data.token);
-      // alert(JSON.stringify(result.data.msg));
       .catch((error) => {
-        alert(error.response.data.msg);
+        toast.error(error.response.data.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
       });
   };
 
@@ -125,6 +131,7 @@ function Signin() {
                   >
                     Sign In
                   </button>
+                  <ToastContainer />
                 </div>
 
                 <div className="col text-center">

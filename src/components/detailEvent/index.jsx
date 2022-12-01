@@ -3,13 +3,17 @@ import groupPeople from "../../assets/img/detailEvent/Group People.png";
 import maps from "../../assets/img/detailEvent/maps.png";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../utils/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { getDataWishlistByUserId } from "../../stores/actions/wishlist";
 
 export default function DetailEvent(props) {
+  const user = useSelector((state) => state.user.userData);
   const navigate = useNavigate();
   const { eventId } = useParams();
-  const dataUserId = localStorage.getItem("userId");
+  const dispatch = useDispatch();
+  const dataUserId = user.userId;
 
-  const [addedWishlist, setAddedWishlist] = useState();
+  const [addedWishlist, setAddedWishlist] = useState(false);
 
   const dataWishlist = {
     userId: dataUserId,
@@ -22,9 +26,9 @@ export default function DetailEvent(props) {
       const data = response.data.data;
       const filterData = data.filter((item) => item.eventId == eventId);
       if (filterData.length > 0) {
-        setAddedWishlist(false);
-      } else {
         setAddedWishlist(true);
+      } else {
+        setAddedWishlist(false);
       }
     } catch (error) {
       console.log(error);
@@ -37,18 +41,24 @@ export default function DetailEvent(props) {
 
   const handleWishlist = () => {
     if (addedWishlist) {
-      axios.post(`/wishlist`, dataWishlist);
-      setAddedWishlist(true);
-      getWishlistData();
+      axios.post(`/wishlist`, dataWishlist).then(() => {
+        dispatch(getDataWishlistByUserId(dataUserId));
+        setAddedWishlist(true);
+      });
     } else {
-      axios.post(`/wishlist`, dataWishlist);
-      setAddedWishlist(false);
-      getWishlistData();
+      axios.post(`/wishlist`, dataWishlist).then(() => {
+        dispatch(getDataWishlistByUserId(dataUserId));
+        setAddedWishlist(false);
+      });
     }
   };
 
   const handleOrder = () => {
-    navigate(`/order/${eventId}`);
+    navigate(`/order/${eventId}`, {
+      state: {
+        eventId: eventId,
+      },
+    });
   };
 
   return (

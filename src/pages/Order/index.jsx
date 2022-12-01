@@ -7,6 +7,9 @@ import SeatPosition from "../../components/orderEvent";
 import ticketREG from "../../assets/img/Order/ticketReg.png";
 import ticketVIP from "../../assets/img/Order/ticketVIP.png";
 import ticketVVIP from "../../assets/img/Order/ticketVVIP.png";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getDataEventById } from "../../stores/actions/event";
 
 export default function Order() {
   const [fullSeat, setFullSeat] = useState([]); // DI GUNAKAN UNTUK MENAMPUNG SEAT YANG FULL
@@ -14,6 +17,9 @@ export default function Order() {
   const [dataOrder, setDataOrder] = useState([]); // DIGUNAKAN UNTUK MENAMPUNG SEAT YANG SUDAH TERPILIH
   const [listBooking, setListBooking] = useState([]); // DIGUNAKAN UNTUK MENAMPUNG LIST DATA SEAT YANG SUDAH DI BOOKING
   const [dataEvent, setDataEvent] = useState([]); // DIGUNAKAN UNTUK MENAMPUNG DATA EVENT
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { eventId } = useParams();
 
   useEffect(() => {
     getDataBooking();
@@ -59,23 +65,9 @@ export default function Order() {
   };
 
   const getDataEvent = () => {
-    // https://www.notion.so/Modul-Event-413ecaad2dd04d4eb0c6c2afc4f50888
-    const DATADUMMY = {
-      status: 200,
-      message: "Success Get Event By Id",
-      data: [
-        {
-          eventId: "e29b8308-d23d-42f0-9071-639403c0c451",
-          name: "We The Fest",
-          category: "Music",
-          location: "Jakarta",
-          detail: "Lorem ipsum dolor amet",
-          dateTimeShow: "2022-01-01 10:00:00",
-          price: 150000,
-        },
-      ],
-    };
-    setDataEvent(DATADUMMY.data);
+    dispatch(getDataEventById(eventId)).then((response) => {
+      setDataEvent(response.value.data.data);
+    });
   };
 
   const handleSelectSeat = (seat) => {
@@ -106,7 +98,9 @@ export default function Order() {
   };
 
   const handleOrderSeat = () => {
-    console.log(dataOrder);
+    navigate("/payment", {
+      state: { dataOrder, dataEvent },
+    });
   };
 
   const clearOrderSeat = () => {

@@ -22,6 +22,8 @@ export default function ListWishlist(props) {
   const wishlistId = localStorage.getItem("wishlistId");
   const userId = localStorage.getItem("userId");
 
+  console.log(props);
+
   useEffect(() => {
     getDataEventById(props.data.eventId);
   }, []);

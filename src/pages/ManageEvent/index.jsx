@@ -14,14 +14,18 @@ export default function ManageEvent() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    dispatch(getDataEvent());
+    getData();
   }, []);
+
+  const getData = () => {
+    dispatch(getDataEvent()).then((response) => {
+      setData(response.value.data.data);
+    });
+  };
 
   useEffect(() => {
     setData(event.eventData);
   }, []);
-
-  console.log(event.eventData);
 
   return (
     <div>

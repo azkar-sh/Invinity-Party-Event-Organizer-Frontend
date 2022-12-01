@@ -133,6 +133,7 @@ export default function SideNavbar() {
             "btn w-75 text-start btn-hover " +
             (menuActive === "booking" ? "text-primary fw-bold" : "")
           }
+          onClick={() => navigationAdmin("booking")}
         >
           {" "}
           <img src={bookingIcon} /> My Booking

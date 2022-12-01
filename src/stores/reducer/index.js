@@ -5,6 +5,7 @@ import user from "./user";
 import event from "./event";
 import wishlist from "./wishlist";
 import auth from "./auth";
+import booking from "./booking";
 
 export default combineReducers({
   counter,
@@ -12,4 +13,5 @@ export default combineReducers({
   event,
   wishlist,
   auth,
+  booking,
 });

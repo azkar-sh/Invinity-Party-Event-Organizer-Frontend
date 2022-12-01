@@ -7,7 +7,6 @@ const wishlist = (state = initialState, action) => {
     case "GET_DATA_WISHLIST_BY_USER_ID_PENDING":
       return {
         ...state,
-        data: [],
       };
     case "GET_DATA_WISHLIST_BY_USER_ID_REJECTED":
       return {

@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./index.css";
 
 export default function CardEvent(props) {
   const navigate = useNavigate();
@@ -12,12 +13,12 @@ export default function CardEvent(props) {
   return (
     <div>
       <div
-        className="card h-100"
+        className="card card-event"
         style={{ width: "15rem" }}
         onClick={handleDetail}
       >
         <img
-          className="card-img-top"
+          className="card-img-top image-fit"
           src={`https://res.cloudinary.com/drkoj1bvv/image/upload/v1663649636/${props.data.image}`}
           alt="Card image cap"
         />
