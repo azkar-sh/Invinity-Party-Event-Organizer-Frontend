@@ -1,6 +1,6 @@
-# Getting started with the Invinity Event Organizer Web App
+# Invinity Event Organizer Web App
 
-<center>
+<p align='center'>
 
 [Application Demo](https://invitickz-event.netlify.app/) |
 [Backend Repository](https://github.com/azkar-sh/Invinity-Party-Event-Organizer-Backend) |
@@ -8,7 +8,7 @@
 
 ![App Screenshot](./src/assets/img/DemoPict/InviticktzCover.png)
 
-</center>
+</p>
 
 ## 📝 Introduction
 
