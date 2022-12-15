@@ -77,6 +77,8 @@ export default function Payment() {
     paymentMethod: "ATM",
   });
 
+  console.log(state);
+
   const handlePayment = () => {
     dispatch(createBooking(form[0]))
       .then((response) => {

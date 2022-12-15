@@ -32,6 +32,7 @@ function Signin() {
         toast.success(response.value.data.message, {
           position: toast.POSITION.TOP_CENTER,
         });
+        alert("Login Success");
         localStorage.setItem("token", response.value.data.data.token);
         dispatch(getDataUserById(response.value.data.data.userId));
         dispatch(getDataWishlistByUserId(response.value.data.data.userId));
